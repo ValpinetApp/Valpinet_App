@@ -100,7 +100,7 @@
                 android:background="#ffffff"
                 android:gravity="center"
                 android:text="BalcondePinetaLacMarbore"
-                android:textSize="12dp" />
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/textView7"
@@ -117,7 +117,7 @@
             <TextView
                 android:id="@+id/textView8"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginHorizontal="1dp"
                 android:layout_marginBottom="1dp"
                 android:layout_weight="1"
@@ -142,12 +142,12 @@
                 android:background="#ffffff"
                 android:gravity="center"
                 android:text="Barrage de Pineta - Cuezo - Refuge"
-                android:textSize="12dp" />
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/textView10"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginHorizontal="1dp"
                 android:layout_marginBottom="1dp"
                 android:layout_weight="1"
@@ -159,7 +159,7 @@
             <TextView
                 android:id="@+id/textView11"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginHorizontal="1dp"
                 android:layout_marginBottom="1dp"
                 android:layout_weight="1"
@@ -183,12 +183,12 @@
                 android:background="#ffffff"
                 android:gravity="center"
                 android:text="Cascade du Cinca - Cascade de la Larri"
-                android:textSize="12dp" />
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/textView13"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginHorizontal="1dp"
                 android:layout_marginBottom="1dp"
                 android:layout_weight="1"
@@ -200,7 +200,7 @@
             <TextView
                 android:id="@+id/textView14"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginHorizontal="1dp"
                 android:layout_marginBottom="1dp"
                 android:layout_weight="1"
