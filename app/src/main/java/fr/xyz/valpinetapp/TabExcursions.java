@@ -1,10 +1,13 @@
 package fr.xyz.valpinetapp;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 public class TabExcursions extends AppCompatActivity {
 
@@ -21,5 +24,17 @@ public class TabExcursions extends AppCompatActivity {
     public void onClik(View v){
         Intent intent= new Intent(this, infoExcursion.class);
         startActivity(intent);
+    }
+    public void reload(View v){
+        AlertDialog.Builder demandeReload = new AlertDialog.Builder(this);
+        demandeReload.setTitle("Rechargement Terminé");
+        demandeReload.setMessage("La page rechargera bientôt les données");
+        demandeReload.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+        demandeReload.show();
     }
 }
