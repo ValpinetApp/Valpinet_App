@@ -19,7 +19,7 @@ public class TabExcursions extends AppCompatActivity {
     }
 
     public void onClik(View v){
-        Intent intent= new Intent(this, Carte.class);
+        Intent intent= new Intent(this, infoExcursion.class);
         startActivity(intent);
     }
 }
