@@ -8,11 +8,9 @@ import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import android.content.pm.PackageManager;
@@ -26,6 +24,7 @@ public class Carte extends AppCompatActivity implements OnMapReadyCallback  {
     GoogleMap mMap; //Objet GoogleMap pour manipuler la carte (marqueurs etc)
     private Location mLastKnownLocation; //Dernière position connue
     private FusedLocationProviderClient mFusedLocationProviderClient; //Fournisseur de Loc
+    private final LatLng mDefaultLocation = new LatLng(-33.8523341, 151.2106085); //Location par défaut
     private static final int DEFAULT_ZOOM = 15; //Zoom carte par défaut
     private static final String TAG = Carte.class.getSimpleName();
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
@@ -48,17 +47,13 @@ public class Carte extends AppCompatActivity implements OnMapReadyCallback  {
     @Override
     public void onMapReady(GoogleMap map) {
         mMap = map;
-
-        // Activités à faire pour tester, ici, position du marker à Sydney
-        LatLng sydney = new LatLng(-33.852, 151.211);
-        map.addMarker(new MarkerOptions().position(sydney)
-                .title("Marker in Sydney"));
-        map.moveCamera(CameraUpdateFactory.newLatLng(sydney));
         // Vérif localisation activer
         updateLocationUI();
 
         // Obtention géolocalisation
-        getDeviceLocation();
+        if(ContextCompat.checkSelfPermission(this.getApplicationContext(),
+                android.Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED){getDeviceLocation();}
     }
 
     private void getDeviceLocation() {
@@ -80,6 +75,7 @@ public class Carte extends AppCompatActivity implements OnMapReadyCallback  {
                         } else {
                             Log.d(TAG, "Current location is null. Using defaults.");
                             Log.e(TAG, "Exception: %s", task.getException());
+                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mDefaultLocation, DEFAULT_ZOOM));
                             mMap.getUiSettings().setMyLocationButtonEnabled(false);
                         }
                     }
