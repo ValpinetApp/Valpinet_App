@@ -38,7 +38,7 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/textView4"
+                android:id="@+id/textView44444"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="0.5"
@@ -66,7 +66,7 @@
                 android:src="@drawable/distance"></ImageView>
 
             <TextView
-                android:id="@+id/textView4"
+                android:id="@+id/textView444"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginHorizontal="1dp"
@@ -78,7 +78,7 @@
                 android:textSize="12dp" />
 
             <TextView
-                android:id="@+id/textView4"
+                android:id="@+id/textView55"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginHorizontal="1dp"
@@ -105,7 +105,7 @@
                 app:srcCompat="@drawable/duree" />
 
             <TextView
-                android:id="@+id/textView4"
+                android:id="@+id/textView44"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginHorizontal="1dp"
@@ -424,7 +424,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
-        android:id="@+id/imageView3"
+        android:id="@+id/iV_carteP"
         android:layout_width="347dp"
         android:layout_height="171dp"
         app:layout_constraintBottom_toTopOf="@+id/button3"

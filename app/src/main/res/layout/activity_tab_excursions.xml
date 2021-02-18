@@ -41,6 +41,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <SearchView
+        android:id="@+id/searchView"
+        android:layout_width="409dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="20dp"
+        android:inputType="textAutoComplete|textAutoCorrect"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
     <TableLayout
         android:id="@+id/tableLayout2"
         android:layout_width="411dp"
@@ -88,7 +98,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clickable="false"
-            android:onClick="onClik">
+            android:onClick="onClik"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/textView6"
@@ -222,12 +233,13 @@
         app:srcCompat="@drawable/reload"
         android:onClick="reload"/>
 
-    <SearchView
-        android:id="@+id/searchView"
-        android:layout_width="409dp"
-        android:layout_height="45dp"
-        android:layout_marginTop="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+    <Button
+        android:id="@+id/b_passerAS"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="onClik"
+        android:text="Suivant"
+        tools:layout_editor_absoluteX="166dp"
+        tools:layout_editor_absoluteY="392dp" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
