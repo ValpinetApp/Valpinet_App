@@ -13,7 +13,9 @@ public class infoExcursion extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_info_excursion);
 
-    }   public void onClikCarte(View v){
+    }
+
+    public void onClikCarte(View v){
             Intent intent= new Intent(this, Carte.class);
             startActivity(intent);
         }
