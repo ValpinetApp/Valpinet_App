@@ -29,23 +29,24 @@ public class Carte extends AppCompatActivity {
     private MapView carte;
     IMapController mapController;
     GeoPoint refuge;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Configuration.getInstance().load(getApplicationContext(),
-                                         PreferenceManager.getDefaultSharedPreferences(getApplicationContext()));
+                PreferenceManager.getDefaultSharedPreferences(getApplicationContext()));
         setContentView(R.layout.activity_carte);
         carte = findViewById(R.id.osm_carte);
         carte.setTileSource(TileSourceFactory.MAPNIK); //Type de carte
         carte.setBuiltInZoomControls(true); //Zoom
         createGpsDisabledAlert();
-        refuge = new GeoPoint(42.66615,0.10372);
+        refuge = new GeoPoint(42.66615, 0.10372);
         mapController = carte.getController();
         mapController.setZoom(10.0);
         mapController.setCenter(refuge);
 
-        ArrayList<OverlayItem>  items = new ArrayList<>();
-        OverlayItem refugePineta = new OverlayItem("Refuge Pineta","Point de départ", refuge);
+        ArrayList<OverlayItem> items = new ArrayList<>();
+        OverlayItem refugePineta = new OverlayItem("Refuge Pineta", "Point de départ", refuge);
         Drawable marqueur = refugePineta.getMarker(0);
         items.add(refugePineta);
 
@@ -68,13 +69,13 @@ public class Carte extends AppCompatActivity {
     }
 
     @Override
-    public void onPause(){
+    public void onPause() {
         super.onPause();
         carte.onPause();
     }
 
     @Override
-    public void onResume(){
+    public void onResume() {
         super.onResume();
         carte.onResume();
     }
@@ -113,5 +114,6 @@ public class Carte extends AppCompatActivity {
             localBuilder.create().show();
         }
     }
+}
 
 
