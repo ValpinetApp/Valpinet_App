@@ -1,95 +1,88 @@
 package fr.xyz.valpinetapp;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-
+import androidx.preference.PreferenceManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.location.Location;
+import android.graphics.drawable.Drawable;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
-public class Carte extends AppCompatActivity implements OnMapReadyCallback {
+import org.osmdroid.api.IMapController;
+import org.osmdroid.config.Configuration;
+import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
+import org.osmdroid.util.GeoPoint;
+import org.osmdroid.views.MapView;
+import org.osmdroid.views.overlay.ItemizedIconOverlay;
+import org.osmdroid.views.overlay.ItemizedOverlayWithFocus;
+import org.osmdroid.views.overlay.OverlayItem;
 
-    boolean mLocationPermissionGranted;
-    GoogleMap mMap; //Objet GoogleMap pour manipuler la carte (marqueurs etc)
-    private Location mLastKnownLocation; //Dernière position connue
-    private FusedLocationProviderClient mFusedLocationProviderClient; //Fournisseur de Loc
-    private final LatLng mDefaultLocation = new LatLng(-33.8523341, 151.2106085); //Location par défaut
-    private static final int DEFAULT_ZOOM = 15; //Zoom carte par défaut
-    private static final String TAG = Carte.class.getSimpleName();
 
+import java.util.ArrayList;
+
+public class Carte extends AppCompatActivity {
+
+    private MapView carte;
+    IMapController mapController;
+    GeoPoint refuge;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // Retrieve the content view that renders the map.
+        Configuration.getInstance().load(getApplicationContext(),
+                                         PreferenceManager.getDefaultSharedPreferences(getApplicationContext()));
         setContentView(R.layout.activity_carte);
-        // Get the SupportMapFragment and request notification
-        // when the map is ready to be used.
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
-
-        // Construction de FusedLocationProviderClient.
-        mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+        carte = findViewById(R.id.osm_carte);
+        carte.setTileSource(TileSourceFactory.MAPNIK); //Type de carte
+        carte.setBuiltInZoomControls(true); //Zoom
         createGpsDisabledAlert();
+        refuge = new GeoPoint(42.66615,0.10372);
+        mapController = carte.getController();
+        mapController.setZoom(10.0);
+        mapController.setCenter(refuge);
+
+        ArrayList<OverlayItem>  items = new ArrayList<>();
+        OverlayItem refugePineta = new OverlayItem("Refuge Pineta","Point de départ", refuge);
+        Drawable marqueur = refugePineta.getMarker(0);
+        items.add(refugePineta);
+
+        ItemizedOverlayWithFocus<OverlayItem> mOverlay = new ItemizedOverlayWithFocus<OverlayItem>(getApplicationContext(),
+                items, new ItemizedIconOverlay.OnItemGestureListener<OverlayItem>() {
+            @Override
+            public boolean onItemSingleTapUp(int index, OverlayItem item) {
+                return true;
+            }
+
+            @Override
+            public boolean onItemLongPress(int index, OverlayItem item) {
+                return false;
+            }
+        });
+
+        mOverlay.setFocusItemsOnTap(true);
+        carte.getOverlays().add(mOverlay);
+
     }
 
     @Override
-    public void onMapReady(GoogleMap map) {
-        mMap = map;
-
-
+    public void onPause(){
+        super.onPause();
+        carte.onPause();
     }
 
-    public void onClik(View v){
+    @Override
+    public void onResume(){
+        super.onResume();
+        carte.onResume();
+    }
+
+
+    public void onClik(View v) {
         createGpsDisabledAlert();
     }
-
-    private void getDeviceLocation() {
-        /*
-         * Obtention de la meilleure et la plus récente localisation de l'appareil, qui peut être nulle dans les rares cas où une localisation n'est pas disponible.
-         */
-        try {
-            if (mLocationPermissionGranted) {
-                Task locationResult = mFusedLocationProviderClient.getLastLocation();
-                locationResult.addOnCompleteListener(this, new OnCompleteListener() {
-                    @Override
-                    public void onComplete(@NonNull Task task) {
-                        if (task.isSuccessful()) {
-                            // On positionne la caméra sur la position récupérée
-                            mLastKnownLocation = (Location) task.getResult();
-                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(
-                                    new LatLng(mLastKnownLocation.getLatitude(),
-                                            mLastKnownLocation.getLongitude()), DEFAULT_ZOOM));
-                        } else {
-                            Log.d(TAG, "Current location is null. Using defaults.");
-                            Log.e(TAG, "Exception: %s", task.getException());
-                            createGpsDisabledAlert();
-                        }
-                    }
-                });
-            }
-        } catch(SecurityException e)  {
-            Log.e("Exception: %s", e.getMessage());
-        }
-    }
-
 
 
     private void showGpsOptions() {
@@ -120,5 +113,5 @@ public class Carte extends AppCompatActivity implements OnMapReadyCallback {
             localBuilder.create().show();
         }
     }
-}
+
 
