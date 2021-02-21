@@ -4,23 +4,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="horizontal"
     tools:context=".MainActivity"
     android:background="@color/background_accueil">
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="309dp"
-        android:layout_height="61dp"
+        android:gravity="center"
+        android:layout_width="338dp"
+        android:layout_height="106dp"
         android:text="ValpinetApp"
         android:textSize="50sp"
         android:textStyle="bold"
         android:typeface="normal"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.539"
+        app:layout_constraintHorizontal_bias="0.54"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.171" />
+        app:layout_constraintVertical_bias="0.053" />
 
     <Button
         android:id="@+id/button"
@@ -33,7 +35,7 @@
         app:layout_constraintHorizontal_bias="0.394"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView"
-        app:layout_constraintVertical_bias="0.698" />
+        app:layout_constraintVertical_bias="0.64" />
 
     <Button
         android:id="@+id/button2"
@@ -46,16 +48,17 @@
         app:layout_constraintHorizontal_bias="0.795"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView"
-        app:layout_constraintVertical_bias="0.698" />
+        app:layout_constraintVertical_bias="0.64" />
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="404dp"
-        android:layout_height="264dp"
+        android:layout_width="345dp"
+        android:layout_height="183dp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView"
-        app:layout_constraintVertical_bias="0.136"
+        app:layout_constraintVertical_bias="0.163"
         app:srcCompat="@drawable/logo" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
