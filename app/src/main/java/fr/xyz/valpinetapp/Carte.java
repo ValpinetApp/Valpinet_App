@@ -2,48 +2,82 @@ package fr.xyz.valpinetapp;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.LatLng;
-
+import androidx.preference.PreferenceManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-
-import android.location.Location;
+import android.graphics.drawable.Drawable;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-public class Carte extends AppCompatActivity implements OnMapReadyCallback {
+import org.osmdroid.api.IMapController;
+import org.osmdroid.config.Configuration;
+import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
+import org.osmdroid.util.GeoPoint;
+import org.osmdroid.views.MapView;
+import org.osmdroid.views.overlay.ItemizedIconOverlay;
+import org.osmdroid.views.overlay.ItemizedOverlayWithFocus;
+import org.osmdroid.views.overlay.OverlayItem;
 
-    boolean mLocationPermissionGranted;
-    GoogleMap mMap; //Objet GoogleMap pour manipuler la carte (marqueurs etc)
-    private Location mLastKnownLocation; //Dernière position connue
-    private FusedLocationProviderClient mFusedLocationProviderClient; //Fournisseur de Loc
-    private final LatLng mDefaultLocation = new LatLng(-33.8523341, 151.2106085); //Location par défaut
-    private static final int DEFAULT_ZOOM = 15; //Zoom carte par défaut
-    private static final String TAG = Carte.class.getSimpleName();
-    private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
+import java.util.ArrayList;
 
+public class Carte extends AppCompatActivity {
 
+    private MapView carte;
+    IMapController mapController;
+    GeoPoint refuge;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // Retrieve the content view that renders the map.
+        Configuration.getInstance().load(getApplicationContext(),
+                                         PreferenceManager.getDefaultSharedPreferences(getApplicationContext()));
         setContentView(R.layout.activity_carte);
-        // Get the SupportMapFragment and request notification
-        // when the map is ready to be used.
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
+        carte = findViewById(R.id.osm_carte);
+        carte.setTileSource(TileSourceFactory.MAPNIK); //Type de carte
+        carte.setBuiltInZoomControls(true); //Zoom
+        createGpsDisabledAlert();
+        refuge = new GeoPoint(42.66615,0.10372);
+        mapController = carte.getController();
+        mapController.setZoom(10.0);
+        mapController.setCenter(refuge);
+        carte.ba
+
+        ArrayList<OverlayItem>  items = new ArrayList<>();
+        OverlayItem refugePineta = new OverlayItem("Refuge Pineta","Point de départ", refuge);
+        Drawable marqueur = refugePineta.getMarker(0);
+        items.add(refugePineta);
+
+        ItemizedOverlayWithFocus<OverlayItem> mOverlay = new ItemizedOverlayWithFocus<OverlayItem>(getApplicationContext(),
+                items, new ItemizedIconOverlay.OnItemGestureListener<OverlayItem>() {
+            @Override
+            public boolean onItemSingleTapUp(int index, OverlayItem item) {
+                return true;
+            }
+
+            @Override
+            public boolean onItemLongPress(int index, OverlayItem item) {
+                return false;
+            }
+        });
+
+        mOverlay.setFocusItemsOnTap(true);
+        carte.getOverlays().add(mOverlay);
+
     }
 
-    public void onMapReady(GoogleMap googleMap) {
-        mMap = googleMap;}
+    @Override
+    public void onPause(){
+        super.onPause();
+        carte.onPause();
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        carte.onResume();
+    }
 
 
     public void onClik(View v) {
@@ -67,7 +101,6 @@ public class Carte extends AppCompatActivity implements OnMapReadyCallback {
                     .setPositiveButton("Activer GPS ",
                             new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface paramDialogInterface, int paramInt) {
-                                    mLocationPermissionGranted = true;
                                     Carte.this.showGpsOptions();
                                 }
                             });

@@ -17,16 +17,14 @@
 <!--        app:layout_constraintEnd_toEndOf="parent"-->
 <!--        app:layout_constraintStart_toStartOf="parent" />-->
 
-<!--    <Button-->
-<!--        android:id="@+id/button4"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginEnd="4dp"-->
-<!--        android:layout_marginBottom="80dp"-->
-<!--        android:onClick="onClik"-->
-<!--        android:text="@string/carte"-->
-<!--        app:layout_constraintBottom_toTopOf="@+id/RetourTabEx"-->
-<!--        app:layout_constraintEnd_toEndOf="@+id/RetourTabEx" />-->
+    <Button
+        android:id="@+id/button4"
+        android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+        android:layout_marginEnd="4dp"
+        android:layout_marginBottom="80dp"
+        android:onClick="onClik"
+        android:text="@string/carte"/>
 
 
     <TextView
