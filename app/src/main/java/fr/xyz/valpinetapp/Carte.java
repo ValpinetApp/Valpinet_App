@@ -21,6 +21,7 @@ import org.osmdroid.views.overlay.ItemizedIconOverlay;
 import org.osmdroid.views.overlay.ItemizedOverlayWithFocus;
 import org.osmdroid.views.overlay.OverlayItem;
 
+
 import java.util.ArrayList;
 
 public class Carte extends AppCompatActivity {
@@ -42,7 +43,6 @@ public class Carte extends AppCompatActivity {
         mapController = carte.getController();
         mapController.setZoom(10.0);
         mapController.setCenter(refuge);
-        carte.ba
 
         ArrayList<OverlayItem>  items = new ArrayList<>();
         OverlayItem refugePineta = new OverlayItem("Refuge Pineta","Point de départ", refuge);
@@ -114,4 +114,4 @@ public class Carte extends AppCompatActivity {
         }
     }
 
-}
+

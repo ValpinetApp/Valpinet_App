@@ -29,9 +29,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".TabExcursions" />
-        <activity android:name=".infoExcursion"></activity>
+        <activity android:name=".infoExcursion"/>
         <activity android:name=".Carte"/>
-
     </application>
-
 </manifest>

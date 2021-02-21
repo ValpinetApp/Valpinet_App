@@ -29,12 +29,6 @@ public class TabExcursions extends AppCompatActivity {
         AlertDialog.Builder demandeReload = new AlertDialog.Builder(this);
         demandeReload.setTitle("Rechargement Terminé");
         demandeReload.setMessage("La page rechargera bientôt les données");
-        demandeReload.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-            }
-        });
         demandeReload.show();
     }
 }
