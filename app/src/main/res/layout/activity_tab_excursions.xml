@@ -20,7 +20,7 @@
 
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/tv_titre"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -32,10 +32,10 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <SearchView
-        android:id="@+id/searchView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
+        android:id="@+id/sv_rechercher"
+        android:layout_width="409dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="20dp"
         android:inputType="textAutoComplete|textAutoCorrect"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -45,7 +45,13 @@
     <ImageView
         android:id="@+id/imageView4"
         android:layout_width="51dp"
-        android:layout_height="46dp"
+        android:layout_height="46dp"/>
+
+    <TableLayout
+        android:id="@+id/tl_tabExcursion"
+        android:layout_width="411dp"
+        android:layout_height="wrap_content"
+        android:background="@color/color_array1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
