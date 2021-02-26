@@ -27,6 +27,7 @@ import android.widget.Toast;
 
 import org.osmdroid.api.IMapController;
 import org.osmdroid.config.Configuration;
+import org.osmdroid.tileprovider.cachemanager.CacheManager;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
@@ -48,6 +49,7 @@ public class Carte extends AppCompatActivity {
     ArrayList<OverlayItem> items = new ArrayList<>();
 
     LocationManager locationManager = null;
+
     private String fournisseur;
     private double latitude;
     private double longitude;
@@ -57,6 +59,7 @@ public class Carte extends AppCompatActivity {
 
 
     Geocoder geocoder = new Geocoder(this, Locale.getDefault());
+
 
     LocationListener ecouteurGPS = new LocationListener() {
         @Override
@@ -269,6 +272,14 @@ public class Carte extends AppCompatActivity {
             ecouteurGPS = null;
         }
     }
+
+    private void gestionCache(){
+        CacheManager cacheM = new CacheManager();
+        CacheManager.CacheManagerTask cacheManagerTask = new CacheManager.CacheManagerTask();
+
+        
+    }
+
     }
 
 
