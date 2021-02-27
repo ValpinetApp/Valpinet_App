@@ -8,6 +8,7 @@
     android:orientation="vertical">
 
 
+
     <org.osmdroid.views.MapView
         android:id="@+id/osm_carte"
         android:layout_width="match_parent"

@@ -6,6 +6,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.preference.PreferenceManager;
 
 import android.Manifest;
+import android.app.Service;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -54,6 +55,7 @@ public class Carte extends AppCompatActivity {
     private String lat;
     private String longi;
     private String autres;
+
 
 
     Geocoder geocoder = new Geocoder(this, Locale.getDefault());
@@ -270,5 +272,3 @@ public class Carte extends AppCompatActivity {
         }
     }
     }
-
-
