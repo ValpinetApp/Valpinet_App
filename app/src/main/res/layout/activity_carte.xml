@@ -11,7 +11,7 @@
     <org.osmdroid.views.MapView
         android:id="@+id/osm_carte"
         android:layout_width="match_parent"
-        android:layout_height="538dp" />
+        android:layout_height="676dp" />
 
     <Button
         android:id="@+id/b_geoloc"
