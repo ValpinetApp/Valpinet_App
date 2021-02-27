@@ -46,7 +46,7 @@ public class Carte extends AppCompatActivity {
         mapController.setCenter(refuge);
 
         ArrayList<OverlayItem> items = new ArrayList<>();
-        OverlayItem refugePineta = new OverlayItem("Refuge Pineta", "Point de départ", refuge);
+        OverlayItem refugePineta = new OverlayItem("Refuge Pineta", "Point de dÃ©part", refuge);
         Drawable marqueur = refugePineta.getMarker(0);
         items.add(refugePineta);
 
