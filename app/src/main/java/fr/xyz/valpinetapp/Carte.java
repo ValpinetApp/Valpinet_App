@@ -56,9 +56,7 @@ public class Carte extends AppCompatActivity {
     private String lat;
     private String longi;
     private String autres;
-
-
-    Geocoder geocoder = new Geocoder(this, Locale.getDefault());
+    
 
 
     LocationListener ecouteurGPS = new LocationListener() {
