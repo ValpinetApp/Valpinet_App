@@ -5,11 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal"
-    tools:context=".MainActivity"
+    tools:context=".Accueil"
     android:background="@color/background_accueil">
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/tv_titre"
         android:gravity="center"
         android:layout_width="338dp"
         android:layout_height="106dp"
@@ -25,20 +25,20 @@
         app:layout_constraintVertical_bias="0.053" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/b_espagnol"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="onClik"
         android:text="ESPAÑOL"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/button2"
+        app:layout_constraintEnd_toStartOf="@+id/b_francais"
         app:layout_constraintHorizontal_bias="0.394"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        app:layout_constraintTop_toBottomOf="@+id/iv_logo"
         app:layout_constraintVertical_bias="0.64" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/b_francais"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="onClik"
@@ -47,17 +47,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.795"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        app:layout_constraintTop_toBottomOf="@+id/iv_logo"
         app:layout_constraintVertical_bias="0.64" />
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/iv_logo"
         android:layout_width="345dp"
         android:layout_height="183dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:layout_constraintTop_toBottomOf="@+id/tv_titre"
         app:layout_constraintVertical_bias="0.163"
         app:srcCompat="@drawable/logo" />
 
