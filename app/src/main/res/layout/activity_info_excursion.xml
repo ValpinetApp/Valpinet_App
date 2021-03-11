@@ -72,7 +72,7 @@
                         android:src="@drawable/distance"></ImageView>
 
                     <TextView
-                        android:id="@+id/tv_1"
+                        android:id="@+id/tv_distance"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_marginHorizontal="1dp"
@@ -111,7 +111,7 @@
                         app:srcCompat="@drawable/duree" />
 
                     <TextView
-                        android:id="@+id/textView44"
+                        android:id="@+id/tv_duree"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_marginHorizontal="1dp"
@@ -141,7 +141,7 @@
                     android:layout_height="match_parent">
 
                     <ImageView
-                        android:id="@+id/tv_montee"
+                        android:id="@+id/iv_montee"
                         android:layout_width="20dp"
                         android:layout_height="30dp"
                         android:layout_marginHorizontal="1dp"
@@ -152,7 +152,7 @@
                         android:src="@drawable/denivmontee"></ImageView>
 
                     <TextView
-                        android:id="@+id/textView4"
+                        android:id="@+id/tv_montee"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_marginHorizontal="1dp"
@@ -181,7 +181,7 @@
                     android:layout_height="50dp">
 
                     <ImageView
-                        android:id="@+id/tv_descente"
+                        android:id="@+id/iv_descente"
                         android:layout_width="20dp"
                         android:layout_height="30dp"
                         android:layout_marginHorizontal="1dp"
@@ -192,7 +192,7 @@
                         android:src="@drawable/denivdescente"></ImageView>
 
                     <TextView
-                        android:id="@+id/textView9"
+                        android:id="@+id/tv_descente"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_marginHorizontal="1dp"
