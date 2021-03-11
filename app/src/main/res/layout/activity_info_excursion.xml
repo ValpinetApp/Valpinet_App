@@ -8,12 +8,14 @@
 
 
     <ScrollView
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.48"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -22,9 +24,9 @@
 
             <TextView
                 android:id="@+id/textView25"
-                android:layout_marginLeft="10px"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="10px"
                 android:layout_marginTop="15dp"
                 android:text="BalcondePinetaLacMarbore"
                 android:textSize="30sp"
@@ -32,10 +34,10 @@
                 tools:ignore="MissingConstraints" />
 
             <TableLayout
-                android:layout_marginTop="10pt"
                 android:id="@+id/tableLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10pt"
                 android:background="@color/color_array2"
                 tools:ignore="UnknownId">
 
@@ -72,7 +74,7 @@
                         android:src="@drawable/distance"></ImageView>
 
                     <TextView
-                        android:id="@+id/textView444"
+                        android:id="@+id/tv_distance"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_marginHorizontal="1dp"
@@ -111,7 +113,7 @@
                         app:srcCompat="@drawable/duree" />
 
                     <TextView
-                        android:id="@+id/textView44"
+                        android:id="@+id/tv_duree"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_marginHorizontal="1dp"
@@ -141,7 +143,7 @@
                     android:layout_height="match_parent">
 
                     <ImageView
-                        android:id="@+id/imageView7"
+                        android:id="@+id/iv_montee"
                         android:layout_width="20dp"
                         android:layout_height="30dp"
                         android:layout_marginHorizontal="1dp"
@@ -152,7 +154,7 @@
                         android:src="@drawable/denivmontee"></ImageView>
 
                     <TextView
-                        android:id="@+id/textView4"
+                        android:id="@+id/tv_montee"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_marginHorizontal="1dp"
@@ -181,7 +183,7 @@
                     android:layout_height="50dp">
 
                     <ImageView
-                        android:id="@+id/imageView8"
+                        android:id="@+id/iv_descente"
                         android:layout_width="20dp"
                         android:layout_height="30dp"
                         android:layout_marginHorizontal="1dp"
@@ -192,7 +194,7 @@
                         android:src="@drawable/denivdescente"></ImageView>
 
                     <TextView
-                        android:id="@+id/textView9"
+                        android:id="@+id/tv_descente"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_marginHorizontal="1dp"
@@ -419,21 +421,21 @@
             </TableLayout>
 
             <ImageView
-                android:layout_marginTop="70dp"
-                android:layout_marginLeft="30dp"
-                android:layout_marginBottom="10dp"
                 android:id="@+id/iV_carteP"
                 android:layout_width="347dp"
                 android:layout_height="171dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="70dp"
+                android:layout_marginBottom="10dp"
                 app:srcCompat="@drawable/carteagrandi" />
 
             <Button
-                android:layout_marginTop="35pt"
                 android:id="@+id/button3"
                 android:layout_width="414dp"
-                android:layout_height="43dp"
+                android:layout_height="59dp"
+                android:layout_marginTop="5dp"
                 android:onClick="onClikCarte"
-                android:text="Y Allez !" />
+                android:text="Y Aller !" />
 
         </LinearLayout>
     </ScrollView>
