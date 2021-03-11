@@ -1,26 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    tools:context=".Carte"
-    android:orientation="vertical">
-
-
-
-    <org.osmdroid.views.MapView
-        android:id="@+id/osm_carte"
-        android:layout_width="match_parent"
-        android:layout_height="676dp" />
-
-    <Button
-        android:id="@+id/b_geoloc"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="onClik"
-        android:text="Se géolocaliser" />
-
-
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+    <org.osmdroid.views.MapView android:id="@+id/map"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" />
 </LinearLayout>
-

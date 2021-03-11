@@ -9,7 +9,10 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 
 import org.osmdroid.api.IMapController;
@@ -17,102 +20,104 @@ import org.osmdroid.config.Configuration;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
-import org.osmdroid.views.overlay.ItemizedIconOverlay;
-import org.osmdroid.views.overlay.ItemizedOverlayWithFocus;
-import org.osmdroid.views.overlay.OverlayItem;
+import org.osmdroid.views.overlay.Overlay;
+import org.osmdroid.views.overlay.ScaleBarOverlay;
+import org.osmdroid.views.overlay.compass.CompassOverlay;
+import org.osmdroid.views.overlay.compass.InternalCompassOrientationProvider;
+import org.osmdroid.views.overlay.gestures.RotationGestureOverlay;
+import org.osmdroid.views.overlay.mylocation.GpsMyLocationProvider;
+import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay;
 
 
 import java.util.ArrayList;
 
 public class Carte extends AppCompatActivity {
-
-    private MapView carte;
-    IMapController mapController;
-    GeoPoint refuge;
+    MapView map = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Configuration.getInstance().load(getApplicationContext(),
-                PreferenceManager.getDefaultSharedPreferences(getApplicationContext()));
+        //handle permissions first, before map is created. not depicted here
+
+        //load/initialize the osmdroid configuration, this can be done
+        Context ctx = getApplicationContext();
+        Configuration.getInstance().load(ctx, PreferenceManager.getDefaultSharedPreferences(ctx));
+        //setting this before the layout is inflated is a good idea
+        //it 'should' ensure that the map has a writable location for the map cache, even without permissions
+        //if no tiles are displayed, you can try overriding the cache path using Configuration.getInstance().setCachePath
+        //see also StorageUtils
+        //note, the load method also sets the HTTP User Agent to your application's package name, abusing osm's tile servers will get you banned based on this string
+        //inflate and create the map
         setContentView(R.layout.activity_carte);
-        carte = findViewById(R.id.osm_carte);
-        carte.setTileSource(TileSourceFactory.MAPNIK); //Type de carte
-        carte.setBuiltInZoomControls(true); //Zoom
-        createGpsDisabledAlert();
-        refuge = new GeoPoint(42.66615, 0.10372);
-        mapController = carte.getController();
-        mapController.setZoom(10.0);
-        mapController.setCenter(refuge);
+        map = (MapView) findViewById(R.id.map);
+        map.setTileSource(TileSourceFactory.MAPNIK);
 
-        ArrayList<OverlayItem> items = new ArrayList<>();
-        OverlayItem refugePineta = new OverlayItem("Refuge Pineta", "Point de dÃ©part", refuge);
-        Drawable marqueur = refugePineta.getMarker(0);
-        items.add(refugePineta);
+        map.setBuiltInZoomControls(true);
+        map.setMultiTouchControls(true);
 
-        ItemizedOverlayWithFocus<OverlayItem> mOverlay = new ItemizedOverlayWithFocus<OverlayItem>(getApplicationContext(),
-                items, new ItemizedIconOverlay.OnItemGestureListener<OverlayItem>() {
-            @Override
-            public boolean onItemSingleTapUp(int index, OverlayItem item) {
-                return true;
-            }
+        IMapController mapController = map.getController();
+        mapController.setZoom(9.5);
+        GeoPoint startPoint = new GeoPoint(48.8583, 2.2944);
+        mapController.setCenter(startPoint);
 
-            @Override
-            public boolean onItemLongPress(int index, OverlayItem item) {
-                return false;
-            }
-        });
 
-        mOverlay.setFocusItemsOnTap(true);
-        carte.getOverlays().add(mOverlay);
+        //creation de l'overlay personne
+        MyLocationNewOverlay mLocationOverlay = new MyLocationNewOverlay(new GpsMyLocationProvider(this),map);
+        //activation de la recherche
+        mLocationOverlay.enableMyLocation();
+        //implementation sur la carte
+        map.getOverlays().add(mLocationOverlay);
+
+
+        //creation de l'overlay boussole
+        CompassOverlay mCompassOverlay = new CompassOverlay(this, new InternalCompassOrientationProvider(this), map);
+        //activation compass
+       mCompassOverlay.enableCompass();
+        //implementation sur la carte
+        map.getOverlays().add(mCompassOverlay);
+
+        //rotation
+        RotationGestureOverlay mRotationGestureOverlay = new RotationGestureOverlay(this, map);
+
+        //ajout double touch
+        mRotationGestureOverlay.setEnabled(true);
+        map.setMultiTouchControls(true);
+        //implementation sur la carte
+        map.getOverlays().add(mRotationGestureOverlay);
+
+
+        //implementation echelle
+        final Context context = this;
+        final DisplayMetrics dm = context.getResources().getDisplayMetrics();
+        ScaleBarOverlay mScaleBarOverlay = new ScaleBarOverlay(map);
+        mScaleBarOverlay.setCentred(true);
+        //play around with these values to get the location on screen in the right place for your application
+        mScaleBarOverlay.setScaleBarOffset(dm.widthPixels / 2, 10);
+        //implementation sur la carte
+        map.getOverlays().add(mScaleBarOverlay);
+
+        //[MARCHE PAS] centrer sur le joggeur
+        mapController.setCenter(mLocationOverlay.getMyLocation());
 
     }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        carte.onPause();
-    }
-
-    @Override
-    public void onResume() {
+    public void onResume(){
         super.onResume();
-        carte.onResume();
+        //this will refresh the osmdroid configuration on resuming.
+        //if you make changes to the configuration, use
+        //SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        //Configuration.getInstance().load(this, PreferenceManager.getDefaultSharedPreferences(this));
+        map.onResume(); //needed for compass, my location overlays, v6.0.0 and up
+
     }
 
-
-    public void onClik(View v) {
-        createGpsDisabledAlert();
+    public void onPause(){
+        super.onPause();
+        //this will refresh the osmdroid configuration on resuming.
+        //if you make changes to the configuration, use
+        //SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        //Configuration.getInstance().save(this, prefs);
+        map.onPause();  //needed for compass, my location overlays, v6.0.0 and up
     }
 
-
-    private void showGpsOptions() {
-        startActivityForResult(new Intent("android.settings.LOCATION_SOURCE_SETTINGS"), -1);
-    }
-
-
-    private void createGpsDisabledAlert() {
-        final LocationManager manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE); //on recupere l etat du gps pour savoir si il est actif ou non
-        if (!manager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-            AlertDialog.Builder localBuilder = new AlertDialog.Builder(this);
-            Button fra = findViewById(R.id.button2);
-            localBuilder
-                    .setMessage("Le GPS est inactif, voulez-vous l'activer ?")
-                    .setCancelable(false)
-                    .setPositiveButton("Activer GPS ",
-                            new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface paramDialogInterface, int paramInt) {
-                                    Carte.this.showGpsOptions();
-                                }
-                            });
-            localBuilder.setNegativeButton("Ne pas l'activer ",
-                    new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface paramDialogInterface, int paramInt) {
-                            paramDialogInterface.cancel();
-                        }
-                    });
-            localBuilder.create().show();
-        }
-    }
 }
 
