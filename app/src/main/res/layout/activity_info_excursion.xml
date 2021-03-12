@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background_accueil"
     tools:context=".infoExcursion">
 
 
@@ -29,6 +30,7 @@
                 android:layout_marginLeft="10px"
                 android:layout_marginTop="15dp"
                 android:text="BalcondePinetaLacMarbore"
+                android:textColor="@color/lemonchiffon"
                 android:textSize="30sp"
                 android:textStyle="bold"
                 tools:ignore="MissingConstraints" />
@@ -38,7 +40,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10pt"
-                android:background="@color/color_array2"
+                android:background="@color/lemonchiffon"
                 tools:ignore="UnknownId">
 
                 <TableRow
@@ -51,6 +53,8 @@
                         android:layout_height="match_parent"
                         android:layout_weight="0.5"
                         android:gravity="center_horizontal|center_vertical"
+                        android:background="@color/green"
+                        android:textColor="@color/black"
                         android:text="BalcondePinetaLacMarbore"
                         android:textSize="15dp"
                         android:textStyle="bold" />
@@ -69,7 +73,7 @@
                         android:layout_marginHorizontal="1dp"
                         android:layout_marginBottom="1dp"
                         android:layout_weight="1"
-                        android:background="#ffffff"
+                        android:textColor="@color/black"
                         android:gravity="center_horizontal|center_vertical"
                         android:src="@drawable/distance"></ImageView>
 
@@ -80,7 +84,7 @@
                         android:layout_marginHorizontal="1dp"
                         android:layout_marginBottom="1dp"
                         android:layout_weight="1"
-                        android:background="#ffffff"
+                        android:textColor="@color/black"
                         android:gravity="center_horizontal|center_vertical"
                         android:text="Distance"
                         android:textSize="12dp" />
@@ -92,7 +96,7 @@
                         android:layout_marginHorizontal="1dp"
                         android:layout_marginBottom="1dp"
                         android:layout_weight="1"
-                        android:background="#ffffff"
+                        android:textColor="@color/black"
                         android:gravity="center_horizontal|center_vertical"
                         android:text=" 13,5 km "
                         android:textSize="12dp" />
@@ -109,7 +113,7 @@
                         android:layout_marginHorizontal="1dp"
                         android:layout_marginBottom="1dp"
                         android:layout_weight="1"
-                        android:background="#FFFFFF"
+                        android:textColor="@color/black"
                         app:srcCompat="@drawable/duree" />
 
                     <TextView
@@ -119,7 +123,7 @@
                         android:layout_marginHorizontal="1dp"
                         android:layout_marginBottom="1dp"
                         android:layout_weight="1"
-                        android:background="#ffffff"
+                        android:textColor="@color/black"
                         android:gravity="center_horizontal|center_vertical"
                         android:text="Durée"
                         android:textSize="12dp" />
@@ -131,7 +135,7 @@
                         android:layout_marginHorizontal="1dp"
                         android:layout_marginBottom="1dp"
                         android:layout_weight="1"
-                        android:background="#ffffff"
+                        android:textColor="@color/black"
                         android:gravity="center_horizontal|center_vertical"
                         android:text="7h30"
                         android:textSize="12dp" />
@@ -149,7 +153,7 @@
                         android:layout_marginHorizontal="1dp"
                         android:layout_marginBottom="1dp"
                         android:layout_weight="1"
-                        android:background="#ffffff"
+                        android:textColor="@color/black"
                         android:gravity="center_horizontal|center_vertical"
                         android:src="@drawable/denivmontee"></ImageView>
 
@@ -160,7 +164,7 @@
                         android:layout_marginHorizontal="1dp"
                         android:layout_marginBottom="1dp"
                         android:layout_weight="1"
-                        android:background="#ffffff"
+                        android:textColor="@color/black"
                         android:gravity="center_horizontal|center_vertical"
                         android:text="Dénivelé de montée"
                         android:textSize="12dp" />
@@ -172,7 +176,7 @@
                         android:layout_marginHorizontal="1dp"
                         android:layout_marginBottom="1dp"
                         android:layout_weight="1"
-                        android:background="#ffffff"
+                        android:textColor="@color/black"
                         android:gravity="center_horizontal|center_vertical"
                         android:text="1350m"
                         android:textSize="12dp" />
@@ -189,7 +193,7 @@
                         android:layout_marginHorizontal="1dp"
                         android:layout_marginBottom="1dp"
                         android:layout_weight="1"
-                        android:background="#ffffff"
+                        android:textColor="@color/black"
                         android:gravity="center_horizontal|center_vertical"
                         android:src="@drawable/denivdescente"></ImageView>
 
@@ -200,7 +204,7 @@
                         android:layout_marginHorizontal="1dp"
                         android:layout_marginBottom="1dp"
                         android:layout_weight="1"
-                        android:background="#ffffff"
+                        android:textColor="@color/black"
                         android:gravity="center_horizontal|center_vertical"
                         android:text="Dénivelé de descente"
                         android:textSize="12dp" />
@@ -212,7 +216,7 @@
                         android:layout_marginHorizontal="1dp"
                         android:layout_marginBottom="1dp"
                         android:layout_weight="1"
-                        android:background="#ffffff"
+                        android:textColor="@color/black"
                         android:gravity="center_horizontal|center_vertical"
                         android:text="1350m"
                         android:textSize="12dp" />
@@ -229,7 +233,7 @@
                         android:layout_marginHorizontal="1dp"
                         android:layout_marginBottom="1dp"
                         android:layout_weight="1"
-                        android:background="#ffffff"
+                        android:textColor="@color/black"
                         android:gravity="center_horizontal|center_vertical"
                         android:src="@drawable/typeparcours"></ImageView>
 
@@ -240,7 +244,7 @@
                         android:layout_marginHorizontal="1dp"
                         android:layout_marginBottom="1dp"
                         android:layout_weight="1"
-                        android:background="#ffffff"
+                        android:textColor="@color/black"
                         android:gravity="center_horizontal|center_vertical"
                         android:text="Type de parcours"
                         android:textSize="12dp" />
@@ -252,7 +256,7 @@
                         android:layout_marginHorizontal="1dp"
                         android:layout_marginBottom="1dp"
                         android:layout_weight="1"
-                        android:background="#ffffff"
+                        android:textColor="@color/black"
                         android:gravity="center_horizontal|center_vertical"
                         android:text="Aller/retour"
                         android:textSize="12dp" />
@@ -269,7 +273,7 @@
                         android:layout_marginHorizontal="1dp"
                         android:layout_marginBottom="1dp"
                         android:layout_weight="1"
-                        android:background="#ffffff"
+                        android:textColor="@color/black"
                         android:gravity="center_horizontal|center_vertical"
                         android:src="@drawable/hostilite"></ImageView>
 
@@ -280,7 +284,7 @@
                         android:layout_marginHorizontal="1dp"
                         android:layout_marginBottom="1dp"
                         android:layout_weight="1"
-                        android:background="#ffffff"
+                        android:textColor="@color/black"
                         android:gravity="center_horizontal|center_vertical"
                         android:text="Hostilité du milieu"
                         android:textSize="12dp" />
@@ -292,7 +296,7 @@
                         android:layout_marginHorizontal="1dp"
                         android:layout_marginBottom="1dp"
                         android:layout_weight="1"
-                        android:background="#ffffff"
+                        android:textColor="@color/black"
                         android:gravity="center_horizontal|center_vertical"
                         android:text="2"
                         android:textSize="12dp" />
@@ -309,7 +313,7 @@
                         android:layout_marginHorizontal="1dp"
                         android:layout_marginBottom="1dp"
                         android:layout_weight="1"
-                        android:background="#ffffff"
+                        android:textColor="@color/black"
                         android:gravity="center_horizontal|center_vertical"
                         android:src="@drawable/difftechnique"></ImageView>
 
@@ -320,7 +324,7 @@
                         android:layout_marginHorizontal="1dp"
                         android:layout_marginBottom="1dp"
                         android:layout_weight="1"
-                        android:background="#ffffff"
+                        android:textColor="@color/black"
                         android:gravity="center_horizontal|center_vertical"
                         android:text="Difficulté technique"
                         android:textSize="12dp" />
@@ -332,7 +336,7 @@
                         android:layout_marginHorizontal="1dp"
                         android:layout_marginBottom="1dp"
                         android:layout_weight="1"
-                        android:background="#ffffff"
+                        android:textColor="@color/black"
                         android:gravity="center_horizontal|center_vertical"
                         android:text="2"
                         android:textSize="12dp" />
@@ -349,7 +353,7 @@
                         android:layout_marginHorizontal="1dp"
                         android:layout_marginBottom="1dp"
                         android:layout_weight="1"
-                        android:background="#ffffff"
+                        android:textColor="@color/black"
                         android:gravity="center_horizontal|center_vertical"
                         android:src="@drawable/orientation"></ImageView>
 
@@ -360,7 +364,7 @@
                         android:layout_marginHorizontal="1dp"
                         android:layout_marginBottom="1dp"
                         android:layout_weight="1"
-                        android:background="#ffffff"
+                        android:textColor="@color/black"
                         android:gravity="center_horizontal|center_vertical"
                         android:text="Difficulté d'orientation"
                         android:textSize="12dp" />
@@ -372,7 +376,7 @@
                         android:layout_marginHorizontal="1dp"
                         android:layout_marginBottom="1dp"
                         android:layout_weight="1"
-                        android:background="#ffffff"
+                        android:textColor="@color/black"
                         android:gravity="center_horizontal|center_vertical"
                         android:text="1"
                         android:textSize="12dp" />
@@ -389,7 +393,7 @@
                         android:layout_marginHorizontal="1dp"
                         android:layout_marginBottom="1dp"
                         android:layout_weight="1"
-                        android:background="#ffffff"
+                        android:textColor="@color/black"
                         android:gravity="center_horizontal|center_vertical"
                         android:src="@drawable/effort"></ImageView>
 
@@ -400,7 +404,7 @@
                         android:layout_marginHorizontal="1dp"
                         android:layout_marginBottom="1dp"
                         android:layout_weight="1"
-                        android:background="#ffffff"
+                        android:textColor="@color/black"
                         android:gravity="center_horizontal|center_vertical"
                         android:text="Effort nécessaire"
                         android:textSize="12dp" />
@@ -412,7 +416,7 @@
                         android:layout_marginHorizontal="1dp"
                         android:layout_marginBottom="1dp"
                         android:layout_weight="1"
-                        android:background="#ffffff"
+                        android:textColor="@color/black"
                         android:gravity="center_horizontal|center_vertical"
                         android:text="4"
                         android:textSize="12dp" />
@@ -434,6 +438,8 @@
                 android:layout_width="414dp"
                 android:layout_height="59dp"
                 android:layout_marginTop="5dp"
+                android:backgroundTint="@color/lemonchiffon"
+                android:textColor="@color/background_accueil"
                 android:onClick="onClikCarte"
                 android:text="Y Aller !" />
 
