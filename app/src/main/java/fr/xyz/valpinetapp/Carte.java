@@ -14,6 +14,7 @@ import android.widget.Button;
 
 import org.osmdroid.api.IMapController;
 import org.osmdroid.config.Configuration;
+import org.osmdroid.tileprovider.cachemanager.CacheManager;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.overlay.ScaleBarOverlay;
@@ -30,6 +31,7 @@ public class Carte extends AppCompatActivity {
     private org.osmdroid.views.MapView map = null;
     private LocationManager manager;
     private boolean estActif;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,6 +126,7 @@ public class Carte extends AppCompatActivity {
         //SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         //Configuration.getInstance().save(this, prefs);
         map.onPause();  //needed for compass, my location overlays, v6.0.0 and up
+
     }
 
     private void createGpsDisabledAlert() {
@@ -156,4 +159,3 @@ public class Carte extends AppCompatActivity {
 
 
 }
-
