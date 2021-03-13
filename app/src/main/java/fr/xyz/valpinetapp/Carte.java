@@ -48,15 +48,15 @@ public class Carte extends AppCompatActivity {
         //note, the load method also sets the HTTP User Agent to your application's package name, abusing osm's tile servers will get you banned based on this string
         //inflate and create the map
         setContentView(R.layout.activity_carte);
-        map = (org.osmdroid.views.MapView) findViewById(R.id.map);
+        map = (org.osmdroid.views.MapView) findViewById(R.id.mv_map);
         map.setTileSource(TileSourceFactory.MAPNIK);
 
 
         map.setMultiTouchControls(true);
 
         IMapController mapController = map.getController();
-        mapController.setZoom(9.5);
-        GeoPoint startPoint = new GeoPoint(48.8583, 2.2944);
+        mapController.setZoom(14.5);
+        GeoPoint startPoint = new GeoPoint(42.66620, 0.10373);
         mapController.setCenter(startPoint);
 
         MyLocationNewOverlay mLocationOverlay = new MyLocationNewOverlay(new GpsMyLocationProvider(this),map);
