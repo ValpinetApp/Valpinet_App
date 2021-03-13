@@ -7,16 +7,23 @@ import android.content.Context;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.location.LocationManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.widget.Button;
 
 import org.osmdroid.api.IMapController;
+import org.osmdroid.bonuspack.routing.OSRMRoadManager;
+import org.osmdroid.bonuspack.routing.Road;
+import org.osmdroid.bonuspack.routing.RoadManager;
 import org.osmdroid.config.Configuration;
 import org.osmdroid.tileprovider.cachemanager.CacheManager;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.GeoPoint;
+import org.osmdroid.views.overlay.Polyline;
 import org.osmdroid.views.overlay.ScaleBarOverlay;
 import org.osmdroid.views.overlay.compass.CompassOverlay;
 import org.osmdroid.views.overlay.compass.InternalCompassOrientationProvider;
@@ -57,12 +64,11 @@ public class Carte extends AppCompatActivity {
         IMapController mapController = map.getController();
         mapController.setZoom(14.5);
         GeoPoint startPoint = new GeoPoint(42.66620, 0.10373);
+        GeoPoint endPoint = new GeoPoint(42.67827,0.07461);
         mapController.setCenter(startPoint);
 
         MyLocationNewOverlay mLocationOverlay = new MyLocationNewOverlay(new GpsMyLocationProvider(this),map);
-
-        manager = (LocationManager) getSystemService( Context.LOCATION_SERVICE ); //on recupere l etat du gps pour savoir si il est actif ou non
-
+        manager = (LocationManager) getSystemService( Context.LOCATION_SERVICE );
         if (!manager.isProviderEnabled( LocationManager.GPS_PROVIDER ) )
         {
             createGpsDisabledAlert();
@@ -156,6 +162,7 @@ public class Carte extends AppCompatActivity {
     private void showGpsOptions() {
         startActivityForResult(new Intent("android.settings.LOCATION_SOURCE_SETTINGS"),-1);
     }
+
 
 
 }
