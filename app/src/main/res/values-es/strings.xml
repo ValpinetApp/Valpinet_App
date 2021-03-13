@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ValpinetApp</string>
+    <string name="title_activity_carte">Carta</string>
+
+
+    <string name="carte">Carta</string>
+    <string name="retour">Volver</string>
+    <string name="google_maps_key">AIzaSyCCwj5mKibIqeZdlc5Ni8D-64-qpCYQ1CM</string>
+    <string name="titreApp">Valle de Piñeta</string>
+    <string name="boutonFr">Francés</string>
+    <string name="boutonEsp">Español</string>
+    <string name="nomTabEx">Nombre</string>
+    <string name="valleeTabEx">Valle</string>
+    <string name="deniveleeTabEx">Aumento de la altura</string>
+
+    <string name="distance">Distancia</string>
+    <string name="duree">Duración</string>
+    <string name="deniveleMonte">Altura de escalada</string>
+    <string name="deniveleDescente">Ganancia de elevación en el descenso</string>
+    <string name="typeP">Tipo de curso</string>
+    <string name="hostilite">Hostilidad del medio ambiente</string>
+    <string name="difficulteT">Dificultad técnica</string>
+    <string name="difficulteOrientation">Dificultad de orientación</string>
+    <string name="Effort">Esfuerzo requerido</string>
+    <string name="boutonCarte">Vamos !</string>
+</resources>

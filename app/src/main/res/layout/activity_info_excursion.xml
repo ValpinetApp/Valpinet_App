@@ -24,8 +24,8 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/textView25"
-                android:layout_width="wrap_content"
+                android:id="@+id/tv_titreExcursion"
+                android:layout_width="401dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10px"
                 android:layout_marginTop="15dp"
@@ -36,8 +36,8 @@
                 tools:ignore="MissingConstraints" />
 
             <TableLayout
-                android:id="@+id/tableLayout"
-                android:layout_width="wrap_content"
+                android:id="@+id/tl_excursion"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10pt"
                 android:background="@color/lemonchiffon"
@@ -48,14 +48,14 @@
                     android:layout_height="wrap_content">
 
                     <TextView
-                        android:id="@+id/textView44444"
+                        android:id="@+id/tv_titreTableau"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_weight="0.5"
-                        android:gravity="center_horizontal|center_vertical"
                         android:background="@color/green"
-                        android:textColor="@color/black"
+                        android:gravity="center_horizontal|center_vertical"
                         android:text="BalcondePinetaLacMarbore"
+                        android:textColor="@color/black"
                         android:textSize="15dp"
                         android:textStyle="bold" />
 
@@ -67,15 +67,15 @@
                     android:layout_height="match_parent">
 
                     <ImageView
-                        android:id="@+id/imageView2"
+                        android:id="@+id/iv_distance"
                         android:layout_width="201dp"
                         android:layout_height="30dp"
                         android:layout_marginHorizontal="1dp"
                         android:layout_marginBottom="1dp"
                         android:layout_weight="1"
-                        android:textColor="@color/black"
                         android:gravity="center_horizontal|center_vertical"
-                        android:src="@drawable/distance"></ImageView>
+                        android:src="@drawable/distance"
+                        android:textColor="@color/black"></ImageView>
 
                     <TextView
                         android:id="@+id/tv_distance"
@@ -84,21 +84,21 @@
                         android:layout_marginHorizontal="1dp"
                         android:layout_marginBottom="1dp"
                         android:layout_weight="1"
-                        android:textColor="@color/black"
                         android:gravity="center_horizontal|center_vertical"
-                        android:text="Distance"
+                        android:text="@string/distance"
+                        android:textColor="@color/black"
                         android:textSize="12dp" />
 
                     <TextView
-                        android:id="@+id/textView55"
+                        android:id="@+id/yv_distanceValue"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_marginHorizontal="1dp"
                         android:layout_marginBottom="1dp"
                         android:layout_weight="1"
-                        android:textColor="@color/black"
                         android:gravity="center_horizontal|center_vertical"
                         android:text=" 13,5 km "
+                        android:textColor="@color/black"
                         android:textSize="12dp" />
                 </TableRow>
 
@@ -107,7 +107,7 @@
                     android:layout_height="match_parent">
 
                     <ImageView
-                        android:id="@+id/imageView15"
+                        android:id="@+id/iv_duree"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:layout_marginHorizontal="1dp"
@@ -123,21 +123,21 @@
                         android:layout_marginHorizontal="1dp"
                         android:layout_marginBottom="1dp"
                         android:layout_weight="1"
-                        android:textColor="@color/black"
                         android:gravity="center_horizontal|center_vertical"
-                        android:text="Durée"
+                        android:text="@string/duree"
+                        android:textColor="@color/black"
                         android:textSize="12dp" />
 
                     <TextView
-                        android:id="@+id/textView4"
+                        android:id="@+id/tv_dureeValue"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_marginHorizontal="1dp"
                         android:layout_marginBottom="1dp"
                         android:layout_weight="1"
-                        android:textColor="@color/black"
                         android:gravity="center_horizontal|center_vertical"
                         android:text="7h30"
+                        android:textColor="@color/black"
                         android:textSize="12dp" />
 
                 </TableRow>
@@ -153,9 +153,9 @@
                         android:layout_marginHorizontal="1dp"
                         android:layout_marginBottom="1dp"
                         android:layout_weight="1"
-                        android:textColor="@color/black"
                         android:gravity="center_horizontal|center_vertical"
-                        android:src="@drawable/denivmontee"></ImageView>
+                        android:src="@drawable/denivmontee"
+                        android:textColor="@color/black"></ImageView>
 
                     <TextView
                         android:id="@+id/tv_montee"
@@ -164,21 +164,21 @@
                         android:layout_marginHorizontal="1dp"
                         android:layout_marginBottom="1dp"
                         android:layout_weight="1"
-                        android:textColor="@color/black"
                         android:gravity="center_horizontal|center_vertical"
-                        android:text="Dénivelé de montée"
+                        android:text="@string/deniveleMonte"
+                        android:textColor="@color/black"
                         android:textSize="12dp" />
 
                     <TextView
-                        android:id="@+id/textView4"
+                        android:id="@+id/tv_monteeValue"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_marginHorizontal="1dp"
                         android:layout_marginBottom="1dp"
                         android:layout_weight="1"
-                        android:textColor="@color/black"
                         android:gravity="center_horizontal|center_vertical"
                         android:text="1350m"
+                        android:textColor="@color/black"
                         android:textSize="12dp" />
                 </TableRow>
 
@@ -193,9 +193,9 @@
                         android:layout_marginHorizontal="1dp"
                         android:layout_marginBottom="1dp"
                         android:layout_weight="1"
-                        android:textColor="@color/black"
                         android:gravity="center_horizontal|center_vertical"
-                        android:src="@drawable/denivdescente"></ImageView>
+                        android:src="@drawable/denivdescente"
+                        android:textColor="@color/black"></ImageView>
 
                     <TextView
                         android:id="@+id/tv_descente"
@@ -204,21 +204,21 @@
                         android:layout_marginHorizontal="1dp"
                         android:layout_marginBottom="1dp"
                         android:layout_weight="1"
-                        android:textColor="@color/black"
                         android:gravity="center_horizontal|center_vertical"
-                        android:text="Dénivelé de descente"
+                        android:text="@string/deniveleDescente"
+                        android:textColor="@color/black"
                         android:textSize="12dp" />
 
                     <TextView
-                        android:id="@+id/textView10"
+                        android:id="@+id/tv_descenteValue"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_marginHorizontal="1dp"
                         android:layout_marginBottom="1dp"
                         android:layout_weight="1"
-                        android:textColor="@color/black"
                         android:gravity="center_horizontal|center_vertical"
                         android:text="1350m"
+                        android:textColor="@color/black"
                         android:textSize="12dp" />
                 </TableRow>
 
@@ -227,38 +227,38 @@
                     android:layout_height="match_parent">
 
                     <ImageView
-                        android:id="@+id/imageView9"
+                        android:id="@+id/iv_TypeP"
                         android:layout_width="20dp"
                         android:layout_height="30dp"
                         android:layout_marginHorizontal="1dp"
                         android:layout_marginBottom="1dp"
                         android:layout_weight="1"
-                        android:textColor="@color/black"
                         android:gravity="center_horizontal|center_vertical"
-                        android:src="@drawable/typeparcours"></ImageView>
+                        android:src="@drawable/typeparcours"
+                        android:textColor="@color/black"></ImageView>
 
                     <TextView
-                        android:id="@+id/textView15"
+                        android:id="@+id/tv_typeP"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_marginHorizontal="1dp"
                         android:layout_marginBottom="1dp"
                         android:layout_weight="1"
-                        android:textColor="@color/black"
                         android:gravity="center_horizontal|center_vertical"
-                        android:text="Type de parcours"
+                        android:text="@string/typeP"
+                        android:textColor="@color/black"
                         android:textSize="12dp" />
 
                     <TextView
-                        android:id="@+id/textView16"
+                        android:id="@+id/tv_typePValue"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_marginHorizontal="1dp"
                         android:layout_marginBottom="1dp"
                         android:layout_weight="1"
-                        android:textColor="@color/black"
                         android:gravity="center_horizontal|center_vertical"
                         android:text="Aller/retour"
+                        android:textColor="@color/black"
                         android:textSize="12dp" />
                 </TableRow>
 
@@ -267,38 +267,38 @@
                     android:layout_height="match_parent">
 
                     <ImageView
-                        android:id="@+id/imageView10"
+                        android:id="@+id/iv_hostilite"
                         android:layout_width="20dp"
                         android:layout_height="30dp"
                         android:layout_marginHorizontal="1dp"
                         android:layout_marginBottom="1dp"
                         android:layout_weight="1"
-                        android:textColor="@color/black"
                         android:gravity="center_horizontal|center_vertical"
-                        android:src="@drawable/hostilite"></ImageView>
+                        android:src="@drawable/hostilite"
+                        android:textColor="@color/black"></ImageView>
 
                     <TextView
-                        android:id="@+id/textView18"
+                        android:id="@+id/tv_hostilite"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_marginHorizontal="1dp"
                         android:layout_marginBottom="1dp"
                         android:layout_weight="1"
-                        android:textColor="@color/black"
                         android:gravity="center_horizontal|center_vertical"
-                        android:text="Hostilité du milieu"
+                        android:text="@string/hostilite"
+                        android:textColor="@color/black"
                         android:textSize="12dp" />
 
                     <TextView
-                        android:id="@+id/textView19"
+                        android:id="@+id/tv_hostiliteValue"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_marginHorizontal="1dp"
                         android:layout_marginBottom="1dp"
                         android:layout_weight="1"
-                        android:textColor="@color/black"
                         android:gravity="center_horizontal|center_vertical"
                         android:text="2"
+                        android:textColor="@color/black"
                         android:textSize="12dp" />
                 </TableRow>
 
@@ -307,38 +307,38 @@
                     android:layout_height="match_parent">
 
                     <ImageView
-                        android:id="@+id/imageView11"
+                        android:id="@+id/im_difficulteT"
                         android:layout_width="54dp"
                         android:layout_height="30dp"
                         android:layout_marginHorizontal="1dp"
                         android:layout_marginBottom="1dp"
                         android:layout_weight="1"
-                        android:textColor="@color/black"
                         android:gravity="center_horizontal|center_vertical"
-                        android:src="@drawable/difftechnique"></ImageView>
+                        android:src="@drawable/difftechnique"
+                        android:textColor="@color/black"></ImageView>
 
                     <TextView
-                        android:id="@+id/textView21"
+                        android:id="@+id/tv_difficulteT"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_marginHorizontal="1dp"
                         android:layout_marginBottom="1dp"
                         android:layout_weight="1"
-                        android:textColor="@color/black"
                         android:gravity="center_horizontal|center_vertical"
-                        android:text="Difficulté technique"
+                        android:text="@string/difficulteT"
+                        android:textColor="@color/black"
                         android:textSize="12dp" />
 
                     <TextView
-                        android:id="@+id/textView22"
+                        android:id="@+id/tv_difficulteTValue"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_marginHorizontal="1dp"
                         android:layout_marginBottom="1dp"
                         android:layout_weight="1"
-                        android:textColor="@color/black"
                         android:gravity="center_horizontal|center_vertical"
                         android:text="2"
+                        android:textColor="@color/black"
                         android:textSize="12dp" />
                 </TableRow>
 
@@ -347,38 +347,38 @@
                     android:layout_height="match_parent">
 
                     <ImageView
-                        android:id="@+id/imageView12"
+                        android:id="@+id/iv_difficulteO"
                         android:layout_width="54dp"
                         android:layout_height="30dp"
                         android:layout_marginHorizontal="1dp"
                         android:layout_marginBottom="1dp"
                         android:layout_weight="1"
-                        android:textColor="@color/black"
                         android:gravity="center_horizontal|center_vertical"
-                        android:src="@drawable/orientation"></ImageView>
+                        android:src="@drawable/orientation"
+                        android:textColor="@color/black"></ImageView>
 
                     <TextView
-                        android:id="@+id/textView33"
+                        android:id="@+id/tv_difficulteO"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_marginHorizontal="1dp"
                         android:layout_marginBottom="1dp"
                         android:layout_weight="1"
-                        android:textColor="@color/black"
                         android:gravity="center_horizontal|center_vertical"
-                        android:text="Difficulté d'orientation"
+                        android:text="@string/difficulteOrientation"
+                        android:textColor="@color/black"
                         android:textSize="12dp" />
 
                     <TextView
-                        android:id="@+id/textView34"
+                        android:id="@+id/tv_difficulteOValue"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_marginHorizontal="1dp"
                         android:layout_marginBottom="1dp"
                         android:layout_weight="1"
-                        android:textColor="@color/black"
                         android:gravity="center_horizontal|center_vertical"
                         android:text="1"
+                        android:textColor="@color/black"
                         android:textSize="12dp" />
                 </TableRow>
 
@@ -387,51 +387,42 @@
                     android:layout_height="match_parent">
 
                     <ImageView
-                        android:id="@+id/imageView13"
+                        android:id="@+id/iv_effort"
                         android:layout_width="54dp"
                         android:layout_height="30dp"
                         android:layout_marginHorizontal="1dp"
                         android:layout_marginBottom="1dp"
                         android:layout_weight="1"
-                        android:textColor="@color/black"
                         android:gravity="center_horizontal|center_vertical"
-                        android:src="@drawable/effort"></ImageView>
+                        android:src="@drawable/effort"
+                        android:textColor="@color/black"></ImageView>
 
                     <TextView
-                        android:id="@+id/textView36"
+                        android:id="@+id/tv_effort"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_marginHorizontal="1dp"
                         android:layout_marginBottom="1dp"
                         android:layout_weight="1"
-                        android:textColor="@color/black"
                         android:gravity="center_horizontal|center_vertical"
-                        android:text="Effort nécessaire"
+                        android:text="@string/Effort"
+                        android:textColor="@color/black"
                         android:textSize="12dp" />
 
                     <TextView
-                        android:id="@+id/textView37"
+                        android:id="@+id/tv_effortValue"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_marginHorizontal="1dp"
                         android:layout_marginBottom="1dp"
                         android:layout_weight="1"
-                        android:textColor="@color/black"
                         android:gravity="center_horizontal|center_vertical"
                         android:text="4"
+                        android:textColor="@color/black"
                         android:textSize="12dp" />
                 </TableRow>
 
             </TableLayout>
-
-            <ImageView
-                android:id="@+id/iV_carteP"
-                android:layout_width="347dp"
-                android:layout_height="171dp"
-                android:layout_marginLeft="30dp"
-                android:layout_marginTop="70dp"
-                android:layout_marginBottom="10dp"
-                app:srcCompat="@drawable/carteagrandi" />
 
             <Button
                 android:id="@+id/button3"
@@ -441,7 +432,7 @@
                 android:backgroundTint="@color/lemonchiffon"
                 android:textColor="@color/background_accueil"
                 android:onClick="onClikCarte"
-                android:text="Y Aller !" />
+                android:text="@string/boutonCarte" />
 
         </LinearLayout>
     </ScrollView>

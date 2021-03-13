@@ -14,7 +14,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="68dp"
-        android:text="Refugio Pineta"
+        android:text="@string/titreApp"
         android:textSize="50sp"
         android:textStyle="bold"
         android:textColor="@color/lemonchiffon"
@@ -491,7 +491,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:textColor="@color/black"
-                android:text="Nom"
+                android:text="@string/nomTabEx"
                 android:textSize="12dp" />
 
             <TextView
@@ -501,17 +501,17 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:textColor="@color/black"
-                android:text="Vallée"
+                android:text="@string/valleeTabEx"
                 android:textSize="12dp" />
 
             <TextView
-                android:id="@+id/tv_Altitude"
+                android:id="@+id/tv_denivele"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:textColor="@color/black"
-                android:text="dénivelé"
+                android:text="@string/deniveleeTabEx"
                 android:textSize="12dp" />
         </TableRow>
     </TableLayout>

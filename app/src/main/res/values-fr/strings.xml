@@ -1,14 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">ValpinetApp</string>
     <string name="title_activity_carte">Carte</string>
-
 
     <string name="carte">Carte</string>
     <string name="retour">Retour</string>
     <string name="google_maps_key">AIzaSyCCwj5mKibIqeZdlc5Ni8D-64-qpCYQ1CM</string>
     <string name="titreApp">Vallée de Piñeta</string>
     <string name="boutonFr">Français</string>
-    <string name="boutonEsp">Español</string>
+    <string name="boutonEsp">Espagnol</string>
     <string name="nomTabEx">Nom</string>
     <string name="valleeTabEx">Vallée</string>
     <string name="deniveleeTabEx">Dénivelée</string>
