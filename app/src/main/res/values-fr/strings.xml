@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">ValpinetApp</string>
+    <string name="app_name">ValPineta</string>
     <string name="title_activity_carte">Carte</string>
 
     <string name="carte">Carte</string>
     <string name="retour">Retour</string>
     <string name="google_maps_key">AIzaSyCCwj5mKibIqeZdlc5Ni8D-64-qpCYQ1CM</string>
     <string name="titreApp">Vallée de Piñeta</string>
-    <string name="boutonFr">Français</string>
-    <string name="boutonEsp">Espagnol</string>
+    <string name="boutonFr">Liste des excursions et ascensions</string>
+    <string name="boutonEsp">Lista de excursiones y ascentiones</string>
     <string name="nomTabEx">Nom</string>
     <string name="valleeTabEx">Vallée</string>
     <string name="deniveleeTabEx">Dénivelée</string>
+    <string name="titreEx">Excursions et ascensions à Pineta et ses alentours</string>
 
     <string name="distance">Distance</string>
     <string name="duree">Durée</string>
@@ -22,5 +23,5 @@
     <string name="difficulteT">Difficulté technique</string>
     <string name="difficulteOrientation">Difficulté d\'orientation</string>
     <string name="Effort">Effort nécessaire</string>
-    <string name="boutonCarte">Allons-y !</string>
+    <string name="boutonCarte">Y aller !</string>
 </resources>
