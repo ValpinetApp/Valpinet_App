@@ -36,7 +36,6 @@ import java.util.ArrayList;
 
 public class Carte extends AppCompatActivity {
     private org.osmdroid.views.MapView map = null;
-    private LocationManager manager;
     private boolean estActif;
 
 
@@ -68,14 +67,14 @@ public class Carte extends AppCompatActivity {
         mapController.setCenter(startPoint);
 
         MyLocationNewOverlay mLocationOverlay = new MyLocationNewOverlay(new GpsMyLocationProvider(this),map);
-        manager = (LocationManager) getSystemService( Context.LOCATION_SERVICE );
+        LocationManager manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         if (!manager.isProviderEnabled( LocationManager.GPS_PROVIDER ) )
         {
             createGpsDisabledAlert();
         }
         else{estActif = true;}
 
-        if(estActif==true){
+        if(estActif){
             //creation de l'overlay personne
             //activation de la recherche
             mLocationOverlay.enableMyLocation();
