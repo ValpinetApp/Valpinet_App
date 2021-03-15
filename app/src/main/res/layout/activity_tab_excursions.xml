@@ -36,21 +36,13 @@
 
 
 
-    <ImageView
-        android:id="@+id/imageView4"
-        android:layout_width="51dp"
-        android:layout_height="46dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/reload"
-        android:onClick="reload"/>
+
 
 
     <ScrollView
         android:id="@+id/scrollView2"
         android:layout_width="match_parent"
-        android:layout_height="500dp"
+        android:layout_height="400dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.444"
         app:layout_constraintStart_toStartOf="parent"
@@ -467,7 +459,19 @@
 
         </LinearLayout>
 
+
+
     </ScrollView>
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="51dp"
+        android:layout_height="46dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/reload"
+        android:onClick="reload"/>
 
     <TableLayout
         android:id="@+id/tableLayout0"
