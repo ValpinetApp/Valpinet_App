@@ -2,11 +2,15 @@ package fr.xyz.valpinetapp;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.preference.PreferenceManager;
+
+import android.Manifest;
 import android.content.Context;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.LocationManager;
 import android.os.AsyncTask;
@@ -37,6 +41,7 @@ import java.util.ArrayList;
 public class Carte extends AppCompatActivity {
     private org.osmdroid.views.MapView map = null;
     private boolean estActif;
+    MyLocationNewOverlay mLocationOverlay;
 
 
     @Override
@@ -54,6 +59,7 @@ public class Carte extends AppCompatActivity {
         //note, the load method also sets the HTTP User Agent to your application's package name, abusing osm's tile servers will get you banned based on this string
         //inflate and create the map
         setContentView(R.layout.activity_carte);
+        demandePerm();
         map = (org.osmdroid.views.MapView) findViewById(R.id.mv_map);
         map.setTileSource(TileSourceFactory.MAPNIK);
 
@@ -66,7 +72,7 @@ public class Carte extends AppCompatActivity {
         GeoPoint endPoint = new GeoPoint(42.67827,0.07461);
         mapController.setCenter(startPoint);
 
-        MyLocationNewOverlay mLocationOverlay = new MyLocationNewOverlay(new GpsMyLocationProvider(this),map);
+        mLocationOverlay = new MyLocationNewOverlay(new GpsMyLocationProvider(this),map);
         LocationManager manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         if (!manager.isProviderEnabled( LocationManager.GPS_PROVIDER ) )
         {
@@ -143,6 +149,12 @@ public class Carte extends AppCompatActivity {
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface paramDialogInterface, int paramInt) {
                                 estActif = true;
+                                demandePerm();
+                                //creation de l'overlay personne
+                                //activation de la recherche
+                                mLocationOverlay.enableMyLocation();
+                                //implementation sur la carte
+                                map.getOverlays().add(mLocationOverlay);
                                 Carte.this.showGpsOptions();
                             }
                         }
@@ -162,6 +174,15 @@ public class Carte extends AppCompatActivity {
         startActivityForResult(new Intent("android.settings.LOCATION_SOURCE_SETTINGS"),-1);
     }
 
-
+    public void demandePerm(){
+        if(ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION)!= PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION)!=PackageManager.PERMISSION_GRANTED){
+            requestPermissions(new String[]{
+                    Manifest.permission.ACCESS_FINE_LOCATION},2
+            );
+            requestPermissions(new String[]{
+                    Manifest.permission.ACCESS_COARSE_LOCATION},2);
+        }
+}
 
 }
