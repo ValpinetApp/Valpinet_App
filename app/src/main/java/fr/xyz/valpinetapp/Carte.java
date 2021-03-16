@@ -20,6 +20,7 @@ import android.util.Log;
 import android.widget.Button;
 
 import org.osmdroid.api.IMapController;
+import org.osmdroid.bonuspack.kml.KmlDocument;
 import org.osmdroid.bonuspack.routing.OSRMRoadManager;
 import org.osmdroid.bonuspack.routing.Road;
 import org.osmdroid.bonuspack.routing.RoadManager;
@@ -27,17 +28,31 @@ import org.osmdroid.config.Configuration;
 import org.osmdroid.tileprovider.cachemanager.CacheManager;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.GeoPoint;
+
+import org.osmdroid.views.overlay.FolderOverlay;
 import org.osmdroid.views.overlay.Marker;
 import org.osmdroid.views.overlay.Polyline;
 import org.osmdroid.views.overlay.ScaleBarOverlay;
 import org.osmdroid.views.overlay.compass.CompassOverlay;
 import org.osmdroid.views.overlay.compass.InternalCompassOrientationProvider;
 import org.osmdroid.views.overlay.gestures.RotationGestureOverlay;
+import org.osmdroid.views.overlay.infowindow.BasicInfoWindow;
 import org.osmdroid.views.overlay.mylocation.GpsMyLocationProvider;
 import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay;
 
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.stream.Stream;
+
+import io.jenetics.jpx.GPX;
+import io.jenetics.jpx.Latitude;
+import io.jenetics.jpx.Track;
+import io.jenetics.jpx.TrackSegment;
+import io.jenetics.jpx.WayPoint;
 
 public class Carte extends AppCompatActivity {
     private org.osmdroid.views.MapView map = null;
@@ -117,9 +132,45 @@ public class Carte extends AppCompatActivity {
         //implementation sur la carte
         map.getOverlays().add(mScaleBarOverlay);
 
-        //[MARCHE PAS] centrer sur le joggeur
-        mapController.setCenter(mLocationOverlay.getMyLocation());
 
+        //lire un chemin
+
+        //afficher trait
+         Polyline polyline;
+         ArrayList<GeoPoint> pathPoints = new ArrayList<GeoPoint>();
+        polyline = new Polyline();
+        polyline.setWidth(2);
+        map.getOverlays().add(polyline);
+        pathPoints.add(startPoint);
+        pathPoints.add(endPoint);
+        pathPoints.add(popo);
+
+        try {
+            WayPoint wp;
+            Stream <WayPoint> gpx;
+            gpx = GPX.read(getAssets().open("Balcon2.gpx")).tracks().flatMap(Track::segments).flatMap(TrackSegment::points);
+            Iterator <WayPoint> it = gpx.iterator();
+            Double lat;
+            Double longi;
+
+            while (it.hasNext()) {
+                wp=it.next();
+                lat = wp.getLatitude().doubleValue();
+                longi = wp.getLongitude().doubleValue();
+                GeoPoint p = new GeoPoint(lat,longi);
+                pathPoints.add(p);
+            }
+        }
+        catch (IOException e) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Title");
+            AlertDialog dialog = builder.create();
+            dialog.show();
+        }
+        polyline.setPoints(pathPoints);
+        map.invalidate();
+
+        ////
     }
     public void onResume(){
         super.onResume();
