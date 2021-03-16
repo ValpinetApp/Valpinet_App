@@ -1,9 +1,12 @@
 package fr.xyz.valpinetapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -25,6 +28,7 @@ public class Accueil extends AppCompatActivity {
 
         francais = findViewById(R.id.b_francais);
         espagnol = findViewById(R.id.b_espagnol);
+        demandePerm();
 
     }
 
@@ -62,5 +66,20 @@ public class Accueil extends AppCompatActivity {
 
         res.updateConfiguration(config, res.getDisplayMetrics());
 
+    }
+
+    public void demandePerm(){
+        if(ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION)!= PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION)!=PackageManager.PERMISSION_GRANTED){
+            requestPermissions(new String[]{
+                    Manifest.permission.ACCESS_FINE_LOCATION},2
+            );
+            requestPermissions(new String[]{
+                    Manifest.permission.ACCESS_COARSE_LOCATION},2);
+        }
+        if(ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE)!= PackageManager.PERMISSION_GRANTED){
+            requestPermissions(new String[]{
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE},2);
+        }
     }
 }

@@ -57,23 +57,17 @@ import io.jenetics.jpx.WayPoint;
 public class Carte extends AppCompatActivity {
     private org.osmdroid.views.MapView map = null;
     private boolean estActif;
-    MyLocationNewOverlay mLocationOverlay;
-    GeoPoint position;
-    IMapController mapController;
+    public MyLocationNewOverlay mLocationOverlay;
+    public IMapController mapController;
+    public CompassOverlay mCompassOverlay;
+    public RotationGestureOverlay mRotationGestureOverlay;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //load/initialize the osmdroid configuration, this can be done
         Context ctx = getApplicationContext();
         Configuration.getInstance().load(ctx, PreferenceManager.getDefaultSharedPreferences(ctx));
-        //setting this before the layout is inflated is a good idea
-        //it 'should' ensure that the map has a writable location for the map cache, even without permissions
-        //if no tiles are displayed, you can try overriding the cache path using Configuration.getInstance().setCachePath
-        //see also StorageUtils
-        //note, the load method also sets the HTTP User Agent to your application's package name, abusing osm's tile servers will get you banned based on this string
-        //inflate and create the map
         setContentView(R.layout.activity_carte);
         demandePerm();
         map = (org.osmdroid.views.MapView) findViewById(R.id.mv_map);
@@ -104,32 +98,16 @@ public class Carte extends AppCompatActivity {
            seGeolocaliser();
         }
 
-
-        //creation de l'overlay boussole
-        CompassOverlay mCompassOverlay = new CompassOverlay(this, new InternalCompassOrientationProvider(this), map);
-        //activation compass
-       mCompassOverlay.enableCompass();
-        //implementation sur la carte
-        map.getOverlays().add(mCompassOverlay);
-
-        //rotation
-        RotationGestureOverlay mRotationGestureOverlay = new RotationGestureOverlay(this, map);
-
-        //ajout double touch
-        mRotationGestureOverlay.setEnabled(true);
-        map.setMultiTouchControls(true);
-        //implementation sur la carte
-        map.getOverlays().add(mRotationGestureOverlay);
+        compas();
+        glisser();
+        Log.d("toto","wtf j'ai un looooooooooooooooooooooooooog");
 
 
-        //implementation echelle
         final Context context = this;
         final DisplayMetrics dm = context.getResources().getDisplayMetrics();
         ScaleBarOverlay mScaleBarOverlay = new ScaleBarOverlay(map);
         mScaleBarOverlay.setCentred(true);
-        //play around with these values to get the location on screen in the right place for your application
         mScaleBarOverlay.setScaleBarOffset(dm.widthPixels / 2, 10);
-        //implementation sur la carte
         map.getOverlays().add(mScaleBarOverlay);
 
 
@@ -142,8 +120,6 @@ public class Carte extends AppCompatActivity {
         polyline.setWidth(2);
         map.getOverlays().add(polyline);
         pathPoints.add(startPoint);
-        pathPoints.add(endPoint);
-        pathPoints.add(popo);
 
         try {
             WayPoint wp;
@@ -170,25 +146,17 @@ public class Carte extends AppCompatActivity {
         polyline.setPoints(pathPoints);
         map.invalidate();
 
-        ////
     }
+
     public void onResume(){
         super.onResume();
-        //this will refresh the osmdroid configuration on resuming.
-        //if you make changes to the configuration, use
-        //SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        //Configuration.getInstance().load(this, PreferenceManager.getDefaultSharedPreferences(this));
-        map.onResume(); //needed for compass, my location overlays, v6.0.0 and up
+        map.onResume();
 
     }
 
     public void onPause(){
         super.onPause();
-        //this will refresh the osmdroid configuration on resuming.
-        //if you make changes to the configuration, use
-        //SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        //Configuration.getInstance().save(this, prefs);
-        map.onPause();  //needed for compass, my location overlays, v6.0.0 and up
+        map.onPause();
 
     }
 
@@ -231,14 +199,24 @@ public class Carte extends AppCompatActivity {
             requestPermissions(new String[]{
                     Manifest.permission.ACCESS_COARSE_LOCATION},2);
         }
-}
+    }
 
-public void seGeolocaliser(){
-    //creation de l'overlay personne
-    //activation de la recherche
-    mLocationOverlay.enableMyLocation();
-    //implementation sur la carte
-    map.getOverlays().add(mLocationOverlay);
-}
+    public void seGeolocaliser(){
+        mLocationOverlay.enableMyLocation();
+        map.getOverlays().add(mLocationOverlay);
+    }
+
+    public void compas(){
+        mCompassOverlay = new CompassOverlay(this, new InternalCompassOrientationProvider(this), map);
+        mCompassOverlay.enableCompass();
+        map.getOverlays().add(mCompassOverlay);
+    }
+
+    public void glisser(){
+        mRotationGestureOverlay = new RotationGestureOverlay(this, map);
+        mRotationGestureOverlay.setEnabled(true);
+        map.setMultiTouchControls(true);
+        map.getOverlays().add(mRotationGestureOverlay);
+    }
 
 }
