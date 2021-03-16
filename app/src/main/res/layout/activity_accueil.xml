@@ -4,66 +4,51 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal"
-    tools:context=".Accueil"
-    android:background="@color/background_accueil">
+    android:orientation="vertical"
+    tools:context=".Accueil">
 
-    <TextView
-        android:id="@+id/tv_titre"
-        android:gravity="center"
-        android:layout_width="338dp"
-        android:layout_height="106dp"
-        android:text="ValpinetApp"
-        android:textColor="@color/lemonchiffon"
-        android:textSize="50sp"
-        android:textStyle="bold"
-        android:typeface="normal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.54"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.053" />
 
     <Button
         android:id="@+id/b_espagnol"
-        android:layout_width="166dp"
-        android:layout_height="73dp"
-        android:layout_marginStart="212dp"
-        android:backgroundTint="@color/lemonchiffon"
+        android:layout_width="192dp"
+        android:layout_height="99dp"
+        android:backgroundTint="@color/forestgreen"
         android:onClick="onClik"
         android:text="@string/boutonEsp"
-        android:textColor="@color/background_accueil"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/iv_logo"
-        app:layout_constraintVertical_bias="0.379" />
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_logo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.922"
+        app:layout_constraintStart_toStartOf="@+id/iv_logo"
+        app:layout_constraintTop_toTopOf="@+id/iv_logo"
+        app:layout_constraintVertical_bias="0.9" />
 
     <Button
         android:id="@+id/b_francais"
-        android:layout_width="166dp"
-        android:layout_height="73dp"
-        android:backgroundTint="@color/lemonchiffon"
+        android:layout_width="192dp"
+        android:layout_height="99dp"
+        android:backgroundTint="@color/forestgreen"
         android:onClick="onClik"
         android:text="@string/boutonFr"
-        android:textColor="@color/background_accueil"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.861"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/iv_logo"
-        app:layout_constraintVertical_bias="0.754" />
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toTopOf="@+id/b_espagnol"
+        app:layout_constraintEnd_toEndOf="@+id/iv_logo"
+        app:layout_constraintHorizontal_bias="0.92"
+        app:layout_constraintStart_toStartOf="@+id/iv_logo"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
 
     <ImageView
         android:id="@+id/iv_logo"
-        android:layout_width="452dp"
-        android:layout_height="204dp"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+
+        android:src="@drawable/fond"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.512"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_titre"
-        app:layout_constraintVertical_bias="0.182"
-        app:srcCompat="@drawable/logo" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

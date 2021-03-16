@@ -2,11 +2,15 @@ package fr.xyz.valpinetapp;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.preference.PreferenceManager;
+
+import android.Manifest;
 import android.content.Context;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.LocationManager;
 import android.os.AsyncTask;
@@ -24,7 +28,9 @@ import org.osmdroid.config.Configuration;
 import org.osmdroid.tileprovider.cachemanager.CacheManager;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.GeoPoint;
+
 import org.osmdroid.views.overlay.FolderOverlay;
+import org.osmdroid.views.overlay.Marker;
 import org.osmdroid.views.overlay.Polyline;
 import org.osmdroid.views.overlay.ScaleBarOverlay;
 import org.osmdroid.views.overlay.compass.CompassOverlay;
@@ -50,15 +56,15 @@ import io.jenetics.jpx.WayPoint;
 
 public class Carte extends AppCompatActivity {
     private org.osmdroid.views.MapView map = null;
-    private LocationManager manager;
     private boolean estActif;
+    MyLocationNewOverlay mLocationOverlay;
+    GeoPoint position;
+    IMapController mapController;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //handle permissions first, before map is created. not depicted here
-
         //load/initialize the osmdroid configuration, this can be done
         Context ctx = getApplicationContext();
         Configuration.getInstance().load(ctx, PreferenceManager.getDefaultSharedPreferences(ctx));
@@ -69,33 +75,33 @@ public class Carte extends AppCompatActivity {
         //note, the load method also sets the HTTP User Agent to your application's package name, abusing osm's tile servers will get you banned based on this string
         //inflate and create the map
         setContentView(R.layout.activity_carte);
+        demandePerm();
         map = (org.osmdroid.views.MapView) findViewById(R.id.mv_map);
         map.setTileSource(TileSourceFactory.MAPNIK);
 
 
         map.setMultiTouchControls(true);
 
-        IMapController mapController = map.getController();
+        mapController = map.getController();
         mapController.setZoom(14.5);
         GeoPoint startPoint = new GeoPoint(42.66620, 0.10373);
-        GeoPoint endPoint = new GeoPoint(42.67827,0.07461);
-        GeoPoint popo = new GeoPoint(47.67827,0.07461);
         mapController.setCenter(startPoint);
+        Marker refuge = new Marker(map);
+        refuge.setPosition(startPoint);
+        refuge.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
+        refuge.setTitle("Refuge");
+        map.getOverlays().add(refuge);
 
-        MyLocationNewOverlay mLocationOverlay = new MyLocationNewOverlay(new GpsMyLocationProvider(this),map);
-        manager = (LocationManager) getSystemService( Context.LOCATION_SERVICE );
+        mLocationOverlay = new MyLocationNewOverlay(new GpsMyLocationProvider(this),map);
+        LocationManager manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         if (!manager.isProviderEnabled( LocationManager.GPS_PROVIDER ) )
         {
             createGpsDisabledAlert();
         }
         else{estActif = true;}
 
-        if(estActif==true){
-            //creation de l'overlay personne
-            //activation de la recherche
-            mLocationOverlay.enableMyLocation();
-            //implementation sur la carte
-            map.getOverlays().add(mLocationOverlay);
+        if(estActif){
+           seGeolocaliser();
         }
 
 
@@ -195,6 +201,8 @@ public class Carte extends AppCompatActivity {
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface paramDialogInterface, int paramInt) {
                                 estActif = true;
+                                demandePerm();
+                                seGeolocaliser();
                                 Carte.this.showGpsOptions();
                             }
                         }
@@ -214,6 +222,23 @@ public class Carte extends AppCompatActivity {
         startActivityForResult(new Intent("android.settings.LOCATION_SOURCE_SETTINGS"),-1);
     }
 
+    public void demandePerm(){
+        if(ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION)!= PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION)!=PackageManager.PERMISSION_GRANTED){
+            requestPermissions(new String[]{
+                    Manifest.permission.ACCESS_FINE_LOCATION},2
+            );
+            requestPermissions(new String[]{
+                    Manifest.permission.ACCESS_COARSE_LOCATION},2);
+        }
+}
 
+public void seGeolocaliser(){
+    //creation de l'overlay personne
+    //activation de la recherche
+    mLocationOverlay.enableMyLocation();
+    //implementation sur la carte
+    map.getOverlays().add(mLocationOverlay);
+}
 
 }
