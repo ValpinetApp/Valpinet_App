@@ -12,10 +12,10 @@
         android:id="@+id/b_espagnol"
         android:layout_width="192dp"
         android:layout_height="99dp"
-        android:backgroundTint="@color/lemonchiffon"
+        android:backgroundTint="@color/forestgreen"
         android:onClick="onClik"
         android:text="@string/boutonEsp"
-        android:textColor="@color/background_accueil"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="@+id/iv_logo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.922"
@@ -27,10 +27,10 @@
         android:id="@+id/b_francais"
         android:layout_width="192dp"
         android:layout_height="99dp"
-        android:backgroundTint="@color/lemonchiffon"
+        android:backgroundTint="@color/forestgreen"
         android:onClick="onClik"
         android:text="@string/boutonFr"
-        android:textColor="@color/background_accueil"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toTopOf="@+id/b_espagnol"
         app:layout_constraintEnd_toEndOf="@+id/iv_logo"
         app:layout_constraintHorizontal_bias="0.92"
@@ -42,8 +42,13 @@
         android:id="@+id/iv_logo"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:src="@drawable/fond"
 
-        app:layout_constraintEnd_toEndOf="parent" />
+        android:src="@drawable/fond"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

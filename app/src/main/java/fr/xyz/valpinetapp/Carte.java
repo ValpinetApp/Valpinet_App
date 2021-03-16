@@ -27,6 +27,7 @@ import org.osmdroid.config.Configuration;
 import org.osmdroid.tileprovider.cachemanager.CacheManager;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.GeoPoint;
+import org.osmdroid.views.overlay.Marker;
 import org.osmdroid.views.overlay.Polyline;
 import org.osmdroid.views.overlay.ScaleBarOverlay;
 import org.osmdroid.views.overlay.compass.CompassOverlay;
@@ -42,13 +43,13 @@ public class Carte extends AppCompatActivity {
     private org.osmdroid.views.MapView map = null;
     private boolean estActif;
     MyLocationNewOverlay mLocationOverlay;
+    GeoPoint position;
+    IMapController mapController;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //handle permissions first, before map is created. not depicted here
-
         //load/initialize the osmdroid configuration, this can be done
         Context ctx = getApplicationContext();
         Configuration.getInstance().load(ctx, PreferenceManager.getDefaultSharedPreferences(ctx));
@@ -66,11 +67,15 @@ public class Carte extends AppCompatActivity {
 
         map.setMultiTouchControls(true);
 
-        IMapController mapController = map.getController();
+        mapController = map.getController();
         mapController.setZoom(14.5);
         GeoPoint startPoint = new GeoPoint(42.66620, 0.10373);
-        GeoPoint endPoint = new GeoPoint(42.67827,0.07461);
         mapController.setCenter(startPoint);
+        Marker refuge = new Marker(map);
+        refuge.setPosition(startPoint);
+        refuge.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
+        refuge.setTitle("Refuge");
+        map.getOverlays().add(refuge);
 
         mLocationOverlay = new MyLocationNewOverlay(new GpsMyLocationProvider(this),map);
         LocationManager manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
@@ -81,11 +86,7 @@ public class Carte extends AppCompatActivity {
         else{estActif = true;}
 
         if(estActif){
-            //creation de l'overlay personne
-            //activation de la recherche
-            mLocationOverlay.enableMyLocation();
-            //implementation sur la carte
-            map.getOverlays().add(mLocationOverlay);
+           seGeolocaliser();
         }
 
 
@@ -150,11 +151,7 @@ public class Carte extends AppCompatActivity {
                             public void onClick(DialogInterface paramDialogInterface, int paramInt) {
                                 estActif = true;
                                 demandePerm();
-                                //creation de l'overlay personne
-                                //activation de la recherche
-                                mLocationOverlay.enableMyLocation();
-                                //implementation sur la carte
-                                map.getOverlays().add(mLocationOverlay);
+                                seGeolocaliser();
                                 Carte.this.showGpsOptions();
                             }
                         }
@@ -183,6 +180,14 @@ public class Carte extends AppCompatActivity {
             requestPermissions(new String[]{
                     Manifest.permission.ACCESS_COARSE_LOCATION},2);
         }
+}
+
+public void seGeolocaliser(){
+    //creation de l'overlay personne
+    //activation de la recherche
+    mLocationOverlay.enableMyLocation();
+    //implementation sur la carte
+    map.getOverlays().add(mLocationOverlay);
 }
 
 }
