@@ -17,7 +17,7 @@
         android:text="@string/titreApp"
         android:textSize="50sp"
         android:textStyle="bold"
-        android:textColor="@color/lemonchiffon"
+        android:textColor="@color/snow"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -39,7 +39,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
         android:inputType="textAutoComplete|textAutoCorrect"
-        android:background="@color/lemonchiffon"
+        android:background="@color/snow"
         android:outlineAmbientShadowColor="@color/green"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -68,7 +68,7 @@
                 android:id="@+id/tableLayout2"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/lemonchiffon">
+                android:background="@color/snow">
 
 
                 <TableRow

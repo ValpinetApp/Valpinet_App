@@ -9,6 +9,7 @@
 
 
     <ScrollView
+        android:id="@+id/scrollView3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -25,12 +26,13 @@
 
             <TextView
                 android:id="@+id/tv_titreExcursion"
-                android:layout_width="401dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10px"
-                android:layout_marginTop="15dp"
+
+                android:layout_marginTop="20px"
+                android:gravity="center"
                 android:text="BalcondePinetaLacMarbore"
-                android:textColor="@color/lemonchiffon"
+                android:textColor="@color/snow"
                 android:textSize="30sp"
                 android:textStyle="bold"
                 tools:ignore="MissingConstraints" />
@@ -40,25 +42,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10pt"
-                android:background="@color/lemonchiffon"
+                android:background="@color/snow"
                 tools:ignore="UnknownId">
 
                 <TableRow
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
-
-                    <TextView
-                        android:id="@+id/tv_titreTableau"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_weight="0.5"
-                        android:background="@color/green"
-                        android:gravity="center_horizontal|center_vertical"
-                        android:text="BalcondePinetaLacMarbore"
-                        android:textColor="@color/black"
-                        android:textSize="15dp"
-                        android:textStyle="bold" />
-
 
                 </TableRow>
 
@@ -424,16 +413,31 @@
 
             </TableLayout>
 
-            <Button
-                android:id="@+id/button3"
-                android:layout_width="414dp"
-                android:layout_height="59dp"
-                android:layout_marginTop="5dp"
-                android:backgroundTint="@color/lemonchiffon"
-                android:textColor="@color/background_accueil"
-                android:onClick="onClikCarte"
-                android:text="@string/boutonCarte" />
-
         </LinearLayout>
     </ScrollView>
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="414dp"
+        android:layout_height="54dp"
+        android:layout_marginBottom="180dp"
+        android:backgroundTint="@color/snow"
+        android:onClick="onClikCarte"
+        android:text="@string/boutonCarte"
+        android:textColor="@color/background_accueil"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/scrollView3"
+        app:layout_constraintVertical_bias="0.31" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="219dp"
+        android:layout_height="246dp"
+        android:layout_marginTop="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button3"
+        app:srcCompat="@drawable/randonneur" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
