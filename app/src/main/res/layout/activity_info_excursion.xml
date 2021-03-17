@@ -428,7 +428,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/scrollView3"
-        app:layout_constraintVertical_bias="0.337" />
+        app:layout_constraintVertical_bias="0.31" />
 
     <ImageView
         android:id="@+id/imageView"
