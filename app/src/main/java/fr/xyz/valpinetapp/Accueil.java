@@ -15,7 +15,7 @@ import android.widget.Button;
 
 import java.util.Locale;
 
-
+//@startuml
 public class Accueil extends AppCompatActivity {
 
     private Button francais;

@@ -1,11 +1,9 @@
 package fr.xyz.valpinetapp;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 
+import androidx.appcompat.app.AppCompatActivity;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -14,7 +12,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -25,10 +22,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-
 import org.json.JSONObject;
-import org.w3c.dom.Text;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -36,8 +30,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-
 import static android.provider.Telephony.Mms.Part.FILENAME;
 
 public class TabExcursions extends AppCompatActivity {
@@ -122,7 +114,7 @@ public class TabExcursions extends AppCompatActivity {
     public void ecrireJSONES(String json){
         FileOutputStream fos;
         try {
-            fos = openFileOutput("jsonES.txt", Context.MODE_PRIVATE);
+            fos = openFileOutput(FILENAME, Context.MODE_PRIVATE);
             fos.write(json.getBytes());
             fos.close();
         } catch (FileNotFoundException e) {
@@ -134,7 +126,7 @@ public class TabExcursions extends AppCompatActivity {
 
     public void readData() {
         try {
-            InputStream fis = openFileInput("jsonES.txt");
+            InputStream fis = openFileInput(FILENAME);
             BufferedReader r = new BufferedReader(new InputStreamReader(fis));
 
             String line;
