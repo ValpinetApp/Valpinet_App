@@ -42,6 +42,7 @@
         android:id="@+id/iv_logo"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
+        android:scaleType = "centerCrop"
 
         android:src="@drawable/fond"
         app:layout_constraintBottom_toBottomOf="parent"

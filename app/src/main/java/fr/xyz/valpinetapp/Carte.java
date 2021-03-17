@@ -176,15 +176,15 @@ public class Carte extends AppCompatActivity {
         Polyline polyline;
         ArrayList<GeoPoint> pathPoints = new ArrayList<>();
         polyline = new Polyline();
-        polyline.setWidth(2);
+        polyline.setWidth(10);
         map.getOverlays().add(polyline);
-        pathPoints.add(startPoint);
+
 
         try {
             Log.d("tryGPX","GPX loadé");
             WayPoint wp;
             Stream <WayPoint> gpx;
-            gpx = GPX.read(getAssets().open("Balcon2.gpx")).tracks().flatMap(Track::segments).flatMap(TrackSegment::points);
+            gpx = GPX.read(getAssets().open("0205111114-22208.gpx")).tracks().flatMap(Track::segments).flatMap(TrackSegment::points);
             Iterator <WayPoint> it = gpx.iterator();
             double lat;
             double longi;
