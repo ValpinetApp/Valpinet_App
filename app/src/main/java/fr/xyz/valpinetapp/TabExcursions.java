@@ -1,11 +1,18 @@
 package fr.xyz.valpinetapp;
 
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import android.app.ProgressDialog;
+import android.app.usage.NetworkStatsManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.location.LocationManager;
+import android.net.ConnectivityManager;
+import android.net.Network;
+import android.net.NetworkInfo;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
@@ -30,17 +37,21 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
 import static android.provider.Telephony.Mms.Part.FILENAME;
 
 public class TabExcursions extends AppCompatActivity {
 
     private ProgressDialog progressBar;
-    Configuration config;
-    Gson gsonFR;
-    Gson gsonES;
-    File fichierES;
-    File fichierFR;
-    TextView test;
+    public Configuration config;
+    public Gson gsonFR;
+    public Gson gsonES;
+    public File fichierES;
+    public File fichierFR;
+    public TextView test;
+    public boolean estActif;
 
 
     @Override
@@ -62,6 +73,14 @@ public class TabExcursions extends AppCompatActivity {
         fichierES = new File(chemin,"jsonES.txt");
         fichierFR = new File(chemin, "jsonFR.txt");
 
+
+        ConnectivityManager manager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = manager.getActiveNetworkInfo();
+        if (activeNetworkInfo!=null) {
+            estActif=true;
+        } else {
+            createWiFIDisabledAlert();
+        }
     }
 
     public void onClik(View v){
@@ -69,6 +88,14 @@ public class TabExcursions extends AppCompatActivity {
         startActivity(intent);
     }
     public void reload(View v){
+        ConnectivityManager manager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = manager.getActiveNetworkInfo();
+        if (activeNetworkInfo!=null) {
+            estActif=true;
+        } else {
+            createWiFIDisabledAlert();
+        }
+        if(estActif){
         RequestQueue queue = Volley.newRequestQueue(this);
         progressBar.show();
         String url="https://valpinetapp.projetud.ovh/wp-json/monapi/v2/excursionsAPI";
@@ -96,6 +123,10 @@ public class TabExcursions extends AppCompatActivity {
                 });
         // Access the RequestQueue through your singleton class.
         queue.add(jsonObjectRequest);}
+    else{
+        createWiFIDisabledAlert();
+        }
+    }
 
 
     public static String jsonToPrettyFormat(String jsonString) {
@@ -141,4 +172,28 @@ public class TabExcursions extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+
+    private void createWiFIDisabledAlert() {
+        AlertDialog.Builder localBuilder = new AlertDialog.Builder(this);
+        localBuilder.setMessage("Le Wifi est inactif, voulez-vous l'activer ?");
+        localBuilder.setCancelable(false);
+        localBuilder.setPositiveButton("Activer Wifi ",
+                (paramDialogInterface, paramInt) -> {
+                    TabExcursions.this.showWiFiOptions();
+                    estActif=true;
+                }
+        );
+        localBuilder.setNegativeButton("Ne pas l'activer ",
+                (paramDialogInterface, paramInt) -> {
+                    estActif = false;
+                    paramDialogInterface.cancel();
+                }
+        );
+        localBuilder.create().show();
+    }
+
+    private void showWiFiOptions() {
+        startActivityForResult(new Intent(new Intent(WifiManager.ACTION_PICK_WIFI_NETWORK)), -1);
+    }
+
 }
