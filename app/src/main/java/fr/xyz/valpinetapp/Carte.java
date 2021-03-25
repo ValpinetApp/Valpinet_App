@@ -118,8 +118,8 @@ public class Carte extends AppCompatActivity {
                         (paramDialogInterface, paramInt) -> {
                             estActif = true;
                             demandePerm();
-                            seGeolocaliser();
                             Carte.this.showGpsOptions();
+                            seGeolocaliser();
                         }
                 );
         localBuilder.setNegativeButton("Ne pas l'activer ",
