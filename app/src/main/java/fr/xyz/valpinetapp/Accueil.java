@@ -28,7 +28,8 @@ public class Accueil extends AppCompatActivity {
 
         francais = findViewById(R.id.b_francais);
         espagnol = findViewById(R.id.b_espagnol);
-        demandePerm();
+        demandePermGPS();
+        demandePermStockage();
 
     }
 
@@ -68,7 +69,7 @@ public class Accueil extends AppCompatActivity {
 
     }
 
-    public void demandePerm(){
+    public void demandePermGPS(){
         if(ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION)!= PackageManager.PERMISSION_GRANTED &&
                 ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION)!=PackageManager.PERMISSION_GRANTED){
             requestPermissions(new String[]{
@@ -77,6 +78,9 @@ public class Accueil extends AppCompatActivity {
             requestPermissions(new String[]{
                     Manifest.permission.ACCESS_COARSE_LOCATION},2);
         }
+    }
+
+    public void demandePermStockage(){
         if(ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE)!= PackageManager.PERMISSION_GRANTED){
             requestPermissions(new String[]{
                     Manifest.permission.WRITE_EXTERNAL_STORAGE},2);
