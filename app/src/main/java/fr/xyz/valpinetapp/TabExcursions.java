@@ -4,13 +4,10 @@ package fr.xyz.valpinetapp;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import android.app.ProgressDialog;
-import android.app.usage.NetworkStatsManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.location.LocationManager;
 import android.net.ConnectivityManager;
-import android.net.Network;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
@@ -37,10 +34,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
-
-import static android.provider.Telephony.Mms.Part.FILENAME;
 
 public class TabExcursions extends AppCompatActivity {
 
@@ -52,6 +45,7 @@ public class TabExcursions extends AppCompatActivity {
     public File fichierFR;
     public TextView test;
     public boolean estActif;
+    private String nomFichier="json";
 
 
     @Override
@@ -70,8 +64,8 @@ public class TabExcursions extends AppCompatActivity {
         test = findViewById(R.id.test);
 
         File chemin = this.getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS);
-        fichierES = new File(chemin,"jsonES.txt");
-        fichierFR = new File(chemin, "jsonFR.txt");
+        fichierES = new File(chemin,nomFichier);
+
 
 
         ConnectivityManager manager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -145,7 +139,7 @@ public class TabExcursions extends AppCompatActivity {
     public void ecrireJSONES(String json){
         FileOutputStream fos;
         try {
-            fos = openFileOutput(FILENAME, Context.MODE_PRIVATE);
+            fos = openFileOutput(nomFichier, Context.MODE_PRIVATE);
             fos.write(json.getBytes());
             fos.close();
         } catch (FileNotFoundException e) {
@@ -157,7 +151,7 @@ public class TabExcursions extends AppCompatActivity {
 
     public void readData() {
         try {
-            InputStream fis = openFileInput(FILENAME);
+            InputStream fis = openFileInput(nomFichier);
             BufferedReader r = new BufferedReader(new InputStreamReader(fis));
 
             String line;
