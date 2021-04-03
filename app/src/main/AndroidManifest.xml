@@ -25,15 +25,24 @@
         android:theme="@style/Theme.ValpinetApp">
 
         <activity android:name=".Accueil">
+
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"
+                    android:configChanges="orientation"
+                        android:screenOrientation="portrait"/>
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".TabExcursions" />
-        <activity android:name=".infoExcursion"/>
+        <activity android:name=".TabExcursions"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation"/>
+        <activity android:name=".infoExcursion"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"/>
         <activity android:name=".Carte"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation"
             android:foregroundServiceType="location"/>
     </application>
 </manifest>
