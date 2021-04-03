@@ -10,6 +10,7 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 
+import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.location.LocationManager;
 import android.os.Bundle;
@@ -33,6 +34,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.stream.Stream;
@@ -55,9 +58,11 @@ public class Carte extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Context ctx = getApplicationContext();
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         Configuration.getInstance().load(ctx, PreferenceManager.getDefaultSharedPreferences(ctx));
         setContentView(R.layout.activity_carte);
         nomFichierGPX = getIntent().getStringExtra("nom");
+        Log.d("test",nomFichierGPX);
         demandePerm();
         Log.d("demandePerm", "Demande perm passée");
         map = findViewById(R.id.mv_map);
@@ -193,18 +198,19 @@ public class Carte extends AppCompatActivity {
             WayPoint wp;
             Stream<WayPoint> gpx;
             InputStream fis = openFileInput(nomFichierGPX);
-            BufferedReader r = new BufferedReader(new InputStreamReader(fis));
-
-            String fichier="";
-            String track="";
-
-            while ((fichier = r.readLine()) != null) {
-                track += fichier;
-            }
-            gpx = GPX.read(track).tracks().flatMap(Track::segments).flatMap(TrackSegment::points);
+            gpx = GPX.read(fis).tracks().flatMap(Track::segments).flatMap(TrackSegment::points);
             Iterator<WayPoint> it = gpx.iterator();
             double lat;
             double longi;
+
+            if(it.hasNext()){
+                wp = it.next();
+                lat = wp.getLatitude().doubleValue();
+                longi = wp.getLongitude().doubleValue();
+                GeoPoint p = new GeoPoint(lat, longi);
+                pathPoints.add(p);
+                mapController.setCenter(p);
+            }
 
             while (it.hasNext()) {
                 wp = it.next();
@@ -219,6 +225,7 @@ public class Carte extends AppCompatActivity {
             builder.setTitle("Title");
             AlertDialog dialog = builder.create();
             dialog.show();
+            dialog.dismiss();
         }
         polyline.setPoints(pathPoints);
         map.invalidate();

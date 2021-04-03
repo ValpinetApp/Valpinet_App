@@ -8,6 +8,7 @@ import android.app.DownloadManager;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -37,14 +38,20 @@ import com.google.gson.JsonParser;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.reflect.Array;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
 public class TabExcursions extends AppCompatActivity {
@@ -57,12 +64,14 @@ public class TabExcursions extends AppCompatActivity {
     public boolean estActif;
     private String nomFichier="json";
     private ArrayList<String> chaine;
+    private String id;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tab_excursions);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         config = new Configuration(this.getResources().getConfiguration());
         progressBar = new ProgressDialog(this);
         progressBar.setCancelable(true);
@@ -112,7 +121,6 @@ public class TabExcursions extends AppCompatActivity {
                     public void onResponse(JSONObject response) {
                         progressBar.hide();
                         String jsonES = gsonES.toJson(response);
-                        jsonES = jsonToPrettyFormat(jsonES);
                         ecrire(jsonES,nomFichier);
                         Log.d("test", String.valueOf(response.length()));
                         readData();
@@ -149,14 +157,20 @@ public class TabExcursions extends AppCompatActivity {
             StringRequest gpx = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
-                    Log.d("test", response.toString());
-                    ecrire(response.toString(),nomF);
+                    response = response.replace("ï","");
+                    response = response.replace("»","");
+                    response = response.replace("¿","");
+                    ecrire(response,nomF);
+                    Log.d("test",response);
+                    Log.d("test",nomF);
+                    progressBar.hide();
                 }
 
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     Log.d("error",error.toString());
+                    progressBar.hide();
                 }
             });
 
@@ -167,26 +181,14 @@ public class TabExcursions extends AppCompatActivity {
         }
     }
 
-
-    public static String jsonToPrettyFormat(String jsonString) {
-        JsonParser parser = new JsonParser();
-        JsonObject json = parser.parse(jsonString).getAsJsonObject();
-
-        Gson gson = new GsonBuilder()
-                .serializeNulls()
-                .disableHtmlEscaping()
-                .setPrettyPrinting()
-                .create();
-
-        return gson.toJson(json);
-    }
-
     public void ecrire(String fichier,String nomFichier){
         FileOutputStream fos;
         try {
             fos = openFileOutput(nomFichier, Context.MODE_PRIVATE);
             fos.write(fichier.getBytes());
             fos.close();
+            InputStream fis = openFileInput(nomFichier);
+            BufferedReader r = new BufferedReader(new InputStreamReader(fis,StandardCharsets.UTF_8));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -198,7 +200,7 @@ public class TabExcursions extends AppCompatActivity {
     public void readData() {
         try {
             InputStream fis = openFileInput(nomFichier);
-            BufferedReader r = new BufferedReader(new InputStreamReader(fis));
+            BufferedReader r = new BufferedReader(new InputStreamReader(fis,StandardCharsets.UTF_8));
 
             String fichier="";
             String line="";
@@ -207,8 +209,6 @@ public class TabExcursions extends AppCompatActivity {
             while ((fichier = r.readLine()) != null) {
               line += fichier;
             }
-            line = jsonToPrettyFormat(line);
-            Log.d("test",line);
             JSONObject jsonRootObject = new JSONObject(line);
             for(int i=0;i<jsonRootObject.getJSONObject("nameValuePairs").length();i++){
             String titreE = jsonRootObject.getJSONObject("nameValuePairs").getJSONObject(String.valueOf(i)).getJSONObject("nameValuePairs").getJSONObject("title").getJSONObject("nameValuePairs").getString("rendered");
@@ -220,7 +220,8 @@ public class TabExcursions extends AppCompatActivity {
             chaine.add(ex);
             Log.d("test",ex);
             String url = jsonRootObject.getJSONObject("nameValuePairs").getJSONObject(String.valueOf(i)).getJSONObject("nameValuePairs").getJSONObject("track").getJSONObject("nameValuePairs").getString("guid");
-            reloadGPX(url,titreE);
+            id = String.valueOf(jsonRootObject.getJSONObject("nameValuePairs").getJSONObject(String.valueOf(i)).getJSONObject("nameValuePairs").getInt("id"));
+            reloadGPX(url,id);
             }
 
             liste.setAdapter(new ArrayAdapter<String>(TabExcursions.this, android.R.layout.simple_list_item_1, chaine));
@@ -260,7 +261,8 @@ public class TabExcursions extends AppCompatActivity {
                     paramDialogInterface.cancel();
                 }
         );
-        localBuilder.create().show();
+        AlertDialog dialog = localBuilder.create();
+        dialog.show();
     }
 
     private void showWiFiOptions() {

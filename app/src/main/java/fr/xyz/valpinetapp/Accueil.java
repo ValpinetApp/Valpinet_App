@@ -6,6 +6,7 @@ import androidx.core.app.ActivityCompat;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
@@ -25,6 +26,7 @@ public class Accueil extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_accueil);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         francais = findViewById(R.id.b_francais);
         espagnol = findViewById(R.id.b_espagnol);
@@ -86,4 +88,6 @@ public class Accueil extends AppCompatActivity {
                     Manifest.permission.WRITE_EXTERNAL_STORAGE},2);
         }
     }
+
+
 }

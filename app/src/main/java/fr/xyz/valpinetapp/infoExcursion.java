@@ -1,6 +1,7 @@
 package fr.xyz.valpinetapp;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -34,11 +35,13 @@ public class infoExcursion extends AppCompatActivity {
     private TextView tv_duree;
     private String nomFichier="json";
     private String nomExcursion;
+    private String identifiant;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_info_excursion);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         id = getIntent().getIntExtra("id",0);
         tv_title = findViewById(R.id.tv_titreExcursion);
         tv_distance = findViewById(R.id.tv_distanceValue);
@@ -57,7 +60,7 @@ public class infoExcursion extends AppCompatActivity {
 
     public void onClikCarte(View v){
             Intent intent= new Intent(this, Carte.class);
-            intent.putExtra("nom",nomExcursion);
+            intent.putExtra("nom",identifiant);
             startActivity(intent);
         }
 
@@ -85,7 +88,7 @@ public class infoExcursion extends AppCompatActivity {
             tv_DifT.setText(jsonRootObject.getJSONObject("nameValuePairs").getJSONObject(String.valueOf(id)).getJSONObject("nameValuePairs").getString("difficulte_technique"));
             tv_DifO.setText(jsonRootObject.getJSONObject("nameValuePairs").getJSONObject(String.valueOf(id)).getJSONObject("nameValuePairs").getString("difficulte_orientation"));
             tv_Effort.setText(jsonRootObject.getJSONObject("nameValuePairs").getJSONObject(String.valueOf(id)).getJSONObject("nameValuePairs").getString("effort_necessaire"));
-
+            identifiant = String.valueOf(jsonRootObject.getJSONObject("nameValuePairs").getJSONObject(String.valueOf(id)).getJSONObject("nameValuePairs").getInt("id"));
             fis.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
