@@ -3,6 +3,8 @@ package fr.xyz.valpinetapp;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.app.DownloadManager;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -14,6 +16,9 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.android.volley.Request;
@@ -21,11 +26,16 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.material.tabs.TabLayout;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.File;
@@ -34,18 +44,19 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 
 public class TabExcursions extends AppCompatActivity {
 
     private ProgressDialog progressBar;
     public Configuration config;
-    public Gson gsonFR;
     public Gson gsonES;
     public File fichierES;
-    public File fichierFR;
-    public TextView test;
+    public ListView liste;
     public boolean estActif;
     private String nomFichier="json";
+    private ArrayList<String> chaine;
 
 
     @Override
@@ -58,28 +69,29 @@ public class TabExcursions extends AppCompatActivity {
         progressBar.setMessage("Cargando...");
         progressBar.setIndeterminate(true);
 
-        gsonFR=new Gson();
-        gsonES=new Gson();
+        gsonES = new Gson();
 
-        test = findViewById(R.id.test);
+        chaine = new ArrayList<String>();
+
+        liste = findViewById(R.id.lv_maListe);
 
         File chemin = this.getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS);
-        fichierES = new File(chemin,nomFichier);
-
+        fichierES = new File(chemin, nomFichier);
 
 
         ConnectivityManager manager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetworkInfo = manager.getActiveNetworkInfo();
-        if (activeNetworkInfo!=null) {
-            estActif=true;
+        if (activeNetworkInfo != null) {
+            estActif = true;
         } else {
             createWiFIDisabledAlert();
         }
-    }
 
-    public void onClik(View v){
-        Intent intent= new Intent(this, infoExcursion.class);
-        startActivity(intent);
+        if (!nomFichier.isEmpty()) {
+            readData();
+        } else {
+            Toast.makeText(TabExcursions.this, "Por favor, recargue.", Toast.LENGTH_LONG).show();
+        }
     }
     public void reload(View v){
         ConnectivityManager manager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -101,7 +113,7 @@ public class TabExcursions extends AppCompatActivity {
                         progressBar.hide();
                         String jsonES = gsonES.toJson(response);
                         jsonES = jsonToPrettyFormat(jsonES);
-                        ecrireJSONES(jsonES);
+                        ecrire(jsonES,nomFichier);
                         Log.d("test", String.valueOf(response.length()));
                         readData();
                     }
@@ -122,6 +134,39 @@ public class TabExcursions extends AppCompatActivity {
         }
     }
 
+    public void reloadGPX(String url, String nomF){
+        ConnectivityManager manager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = manager.getActiveNetworkInfo();
+        if (activeNetworkInfo!=null) {
+            estActif=true;
+        } else {
+            createWiFIDisabledAlert();
+        }
+        if(estActif){
+            RequestQueue queue = Volley.newRequestQueue(this);
+            progressBar.show();
+
+            StringRequest gpx = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    Log.d("test", response.toString());
+                    ecrire(response.toString(),nomF);
+                }
+
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Log.d("error",error.toString());
+                }
+            });
+
+            // Access the RequestQueue through your singleton class.
+            queue.add(gpx);}
+        else{
+            createWiFIDisabledAlert();
+        }
+    }
+
 
     public static String jsonToPrettyFormat(String jsonString) {
         JsonParser parser = new JsonParser();
@@ -136,11 +181,11 @@ public class TabExcursions extends AppCompatActivity {
         return gson.toJson(json);
     }
 
-    public void ecrireJSONES(String json){
+    public void ecrire(String fichier,String nomFichier){
         FileOutputStream fos;
         try {
             fos = openFileOutput(nomFichier, Context.MODE_PRIVATE);
-            fos.write(json.getBytes());
+            fos.write(fichier.getBytes());
             fos.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -149,20 +194,52 @@ public class TabExcursions extends AppCompatActivity {
         }
     }
 
+
     public void readData() {
         try {
             InputStream fis = openFileInput(nomFichier);
             BufferedReader r = new BufferedReader(new InputStreamReader(fis));
 
-            String line;
-            while ((line = r.readLine()) != null) {
-               test.setText(line+"\n");
+            String fichier="";
+            String line="";
+            String ex="";
+
+            while ((fichier = r.readLine()) != null) {
+              line += fichier;
             }
+            line = jsonToPrettyFormat(line);
+            Log.d("test",line);
+            JSONObject jsonRootObject = new JSONObject(line);
+            for(int i=0;i<jsonRootObject.getJSONObject("nameValuePairs").length();i++){
+            String titreE = jsonRootObject.getJSONObject("nameValuePairs").getJSONObject(String.valueOf(i)).getJSONObject("nameValuePairs").getJSONObject("title").getJSONObject("nameValuePairs").getString("rendered");
+            ex = "\n" + "Actividad : " + titreE + "\n"+""+"\n";
+            String vallee = jsonRootObject.getJSONObject("nameValuePairs").getJSONObject(String.valueOf(i)).getJSONObject("nameValuePairs").getString("vallee");
+            ex = ex + "Zona/Valle : " + vallee + "\n"+""+"\n";
+            String denivelle = jsonRootObject.getJSONObject("nameValuePairs").getJSONObject(String.valueOf(i)).getJSONObject("nameValuePairs").getString("denivele_de_montee");
+            ex = ex + "Desnivel (m) : " + denivelle + "\n";
+            chaine.add(ex);
+            Log.d("test",ex);
+            String url = jsonRootObject.getJSONObject("nameValuePairs").getJSONObject(String.valueOf(i)).getJSONObject("nameValuePairs").getJSONObject("track").getJSONObject("nameValuePairs").getString("guid");
+            reloadGPX(url,titreE);
+            }
+
+            liste.setAdapter(new ArrayAdapter<String>(TabExcursions.this, android.R.layout.simple_list_item_1, chaine));
+            liste.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    int pos = position;
+                    Intent intent = new Intent(TabExcursions.this, infoExcursion.class);
+                    intent.putExtra("id",pos);
+                    startActivity(intent);
+                }
+            });
 
             fis.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
             e.printStackTrace();
         }
     }

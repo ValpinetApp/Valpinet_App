@@ -28,7 +28,11 @@ import org.osmdroid.views.overlay.compass.InternalCompassOrientationProvider;
 import org.osmdroid.views.overlay.gestures.RotationGestureOverlay;
 import org.osmdroid.views.overlay.mylocation.GpsMyLocationProvider;
 import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay;
+
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.stream.Stream;
@@ -45,6 +49,7 @@ public class Carte extends AppCompatActivity {
     public CompassOverlay mCompassOverlay;
     public RotationGestureOverlay mRotationGestureOverlay;
     public GeoPoint startPoint;
+    private String nomFichierGPX;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +57,7 @@ public class Carte extends AppCompatActivity {
         Context ctx = getApplicationContext();
         Configuration.getInstance().load(ctx, PreferenceManager.getDefaultSharedPreferences(ctx));
         setContentView(R.layout.activity_carte);
+        nomFichierGPX = getIntent().getStringExtra("nom");
         demandePerm();
         Log.d("demandePerm", "Demande perm passée");
         map = findViewById(R.id.mv_map);
@@ -186,7 +192,16 @@ public class Carte extends AppCompatActivity {
             Log.d("tryGPX", "GPX loadé");
             WayPoint wp;
             Stream<WayPoint> gpx;
-            gpx = GPX.read(getAssets().open("0205111114-22208.gpx")).tracks().flatMap(Track::segments).flatMap(TrackSegment::points);
+            InputStream fis = openFileInput(nomFichierGPX);
+            BufferedReader r = new BufferedReader(new InputStreamReader(fis));
+
+            String fichier="";
+            String track="";
+
+            while ((fichier = r.readLine()) != null) {
+                track += fichier;
+            }
+            gpx = GPX.read(track).tracks().flatMap(Track::segments).flatMap(TrackSegment::points);
             Iterator<WayPoint> it = gpx.iterator();
             double lat;
             double longi;
