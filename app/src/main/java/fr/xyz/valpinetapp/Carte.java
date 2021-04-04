@@ -4,19 +4,15 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.preference.PreferenceManager;
-
 import android.Manifest;
-
 import android.content.Context;
 import android.content.Intent;
-
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
-
 import org.osmdroid.api.IMapController;
 import org.osmdroid.config.Configuration;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
@@ -29,13 +25,8 @@ import org.osmdroid.views.overlay.compass.InternalCompassOrientationProvider;
 import org.osmdroid.views.overlay.gestures.RotationGestureOverlay;
 import org.osmdroid.views.overlay.mylocation.GpsMyLocationProvider;
 import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay;
-
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.stream.Stream;
@@ -45,13 +36,14 @@ import io.jenetics.jpx.TrackSegment;
 import io.jenetics.jpx.WayPoint;
 
 public class Carte extends AppCompatActivity {
+
     private org.osmdroid.views.MapView map = null;
-    private boolean estActif;
-    public MyLocationNewOverlay mLocationOverlay;
+    private boolean GPSestActif;
+    public MyLocationNewOverlay overlayPosition;
     public IMapController mapController;
-    public CompassOverlay mCompassOverlay;
-    public RotationGestureOverlay mRotationGestureOverlay;
-    public GeoPoint startPoint;
+    public CompassOverlay overlayCompas;
+    public RotationGestureOverlay overlayRotationToucher;
+    public GeoPoint pointDeDepart;
     private String nomFichierGPX;
 
     @Override
@@ -63,44 +55,40 @@ public class Carte extends AppCompatActivity {
         setContentView(R.layout.activity_carte);
         nomFichierGPX = getIntent().getStringExtra("nom");
         Log.d("test",nomFichierGPX);
-        demandePerm();
+        demandePermissionGPS();
         Log.d("demandePerm", "Demande perm passée");
         map = findViewById(R.id.mv_map);
         map.setTileSource(TileSourceFactory.MAPNIK);
-
-
         map.setMultiTouchControls(true);
-
         mapController = map.getController();
         mapController.setZoom(14.5);
-        startPoint = new GeoPoint(42.66620, 0.10373);
-        mapController.setCenter(startPoint);
+        pointDeDepart = new GeoPoint(42.66620, 0.10373);
+        mapController.setCenter(pointDeDepart);
         Marker refuge = new Marker(map);
-        refuge.setPosition(startPoint);
+        refuge.setPosition(pointDeDepart);
         refuge.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
         refuge.setTitle("Refuge");
         map.getOverlays().add(refuge);
         Log.d("Refuge", "Refuge positionné");
-
-        mLocationOverlay = new MyLocationNewOverlay(new GpsMyLocationProvider(this), map);
+        overlayPosition = new MyLocationNewOverlay(new GpsMyLocationProvider(this), map);
         LocationManager manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+
         if (!manager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-            createGpsDisabledAlert();
+            demandeGPS();
         } else {
-            estActif = true;
+            GPSestActif = true;
         }
 
-        if (estActif) {
+        if (GPSestActif) {
             seGeolocaliser();
         }
 
         Log.d("Localisation", "Localisation activée");
-
-        compas();
+        lancerCompas();
         Log.d("Create", "Compas positionné");
-        glisser();
+        activerGlisser();
         Log.d("Create", "Gestion zoom à deux doigts établis");
-        echelle();
+        lancerEchelle();
         Log.d("Create", "Echelle positionnée");
         tracerGPX();
         Log.d("Create", "GPX en place");
@@ -120,62 +108,58 @@ public class Carte extends AppCompatActivity {
         Log.d("Resume", "En pause");
     }
 
-    private void createGpsDisabledAlert() {
+    private Boolean demandeGPS() {
         AlertDialog.Builder localBuilder = new AlertDialog.Builder(this);
         localBuilder
-                .setMessage("Le GPS est inactif, voulez-vous l'activer ?")
+                .setMessage(getString(R.string.GPStext))
                 .setCancelable(false)
-                .setPositiveButton("Activer GPS ",
+                .setPositiveButton(getString(R.string.GPSOui),
                         (paramDialogInterface, paramInt) -> {
-                            estActif = true;
-                            demandePerm();
-                            Carte.this.showGpsOptions();
+                            GPSestActif = true;
+                            demandePermissionGPS();
+                            Carte.this.montrerOptionGPS();
                             seGeolocaliser();
                         }
                 );
-        localBuilder.setNegativeButton("Ne pas l'activer ",
-                (paramDialogInterface, paramInt) -> {
-                    estActif = false;
-                    paramDialogInterface.cancel();
+        localBuilder.setNegativeButton(getString(R.string.GPSNon), (paramDialogInterface, paramInt) -> { GPSestActif = false;paramDialogInterface.cancel();
                 }
         );
         localBuilder.create().show();
+        return GPSestActif;
     }
 
-    private void showGpsOptions() {
+    private void montrerOptionGPS() {
         startActivityForResult(new Intent("android.settings.LOCATION_SOURCE_SETTINGS"), -1);
     }
 
-    public void demandePerm() {
+    public void demandePermissionGPS() {
         if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
                 ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            requestPermissions(new String[]{
-                    Manifest.permission.ACCESS_FINE_LOCATION}, 2
-            );
-            requestPermissions(new String[]{
-                    Manifest.permission.ACCESS_COARSE_LOCATION}, 2);
+            requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 2);
+            requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, 2);
+            seGeolocaliser();
         }
     }
 
     public void seGeolocaliser() {
-        mLocationOverlay.enableMyLocation();
-        map.getOverlays().add(mLocationOverlay);
+        overlayPosition.enableMyLocation();
+        map.getOverlays().add(overlayPosition);
     }
 
-    public void compas() {
-        mCompassOverlay = new CompassOverlay(this, new InternalCompassOrientationProvider(this), map);
-        mCompassOverlay.enableCompass();
-        map.getOverlays().add(mCompassOverlay);
+    public void lancerCompas() {
+        overlayCompas = new CompassOverlay(this, new InternalCompassOrientationProvider(this), map);
+        overlayCompas.enableCompass();
+        map.getOverlays().add(overlayCompas);
     }
 
-    public void glisser() {
-        mRotationGestureOverlay = new RotationGestureOverlay(this, map);
-        mRotationGestureOverlay.setEnabled(true);
+    public void activerGlisser() {
+        overlayRotationToucher = new RotationGestureOverlay(this, map);
+        overlayRotationToucher.setEnabled(true);
         map.setMultiTouchControls(true);
-        map.getOverlays().add(mRotationGestureOverlay);
+        map.getOverlays().add(overlayRotationToucher);
     }
 
-    public void echelle() {
+    public void lancerEchelle() {
         final Context context = this;
         final DisplayMetrics dm = context.getResources().getDisplayMetrics();
         ScaleBarOverlay mScaleBarOverlay = new ScaleBarOverlay(map);
@@ -184,40 +168,39 @@ public class Carte extends AppCompatActivity {
         map.getOverlays().add(mScaleBarOverlay);
     }
 
-    public void tracerGPX() {
+    public Boolean tracerGPX() {
         //afficher trait
-        Polyline polyline;
+        Polyline chemin;
         ArrayList<GeoPoint> pathPoints = new ArrayList<>();
-        polyline = new Polyline();
-        polyline.setWidth(10);
-        map.getOverlays().add(polyline);
-
+        chemin = new Polyline();
+        chemin.setWidth(10);
+        map.getOverlays().add(chemin);
 
         try {
             Log.d("tryGPX", "GPX loadé");
-            WayPoint wp;
+            WayPoint pointGPS;
             Stream<WayPoint> gpx;
-            InputStream fis = openFileInput(nomFichierGPX);
-            gpx = GPX.read(fis).tracks().flatMap(Track::segments).flatMap(TrackSegment::points);
+            InputStream fichierALire = openFileInput(nomFichierGPX);
+            gpx = GPX.read(fichierALire).tracks().flatMap(Track::segments).flatMap(TrackSegment::points);
             Iterator<WayPoint> it = gpx.iterator();
-            double lat;
-            double longi;
+            double latitude;
+            double longitude;
 
             if(it.hasNext()){
-                wp = it.next();
-                lat = wp.getLatitude().doubleValue();
-                longi = wp.getLongitude().doubleValue();
-                GeoPoint p = new GeoPoint(lat, longi);
-                pathPoints.add(p);
-                mapController.setCenter(p);
+                pointGPS = it.next();
+                latitude = pointGPS.getLatitude().doubleValue();
+                longitude = pointGPS.getLongitude().doubleValue();
+                GeoPoint point = new GeoPoint(latitude, longitude);
+                pathPoints.add(point);
+                mapController.setCenter(point);
             }
 
             while (it.hasNext()) {
-                wp = it.next();
-                lat = wp.getLatitude().doubleValue();
-                longi = wp.getLongitude().doubleValue();
-                GeoPoint p = new GeoPoint(lat, longi);
-                pathPoints.add(p);
+                pointGPS = it.next();
+                latitude = pointGPS.getLatitude().doubleValue();
+                longitude = pointGPS.getLongitude().doubleValue();
+                GeoPoint point = new GeoPoint(latitude, longitude);
+                pathPoints.add(point);
             }
         } catch (IOException e) {
             Log.d("Erreur", e.toString());
@@ -226,8 +209,10 @@ public class Carte extends AppCompatActivity {
             AlertDialog dialog = builder.create();
             dialog.show();
             dialog.dismiss();
+            return false;
         }
-        polyline.setPoints(pathPoints);
+        chemin.setPoints(pathPoints);
         map.invalidate();
+        return true;
     }
 }

@@ -14,6 +14,18 @@
     <string name="valleeTabEx">Valle</string>
     <string name="deniveleeTabEx">Desnivel</string>
     <string name="titreEx">Excursiones y ascensiones en Pineta y sus alrededores</string>
+    <string name="pasExcursion">ninguna excursión</string>
+    <string name="telechargement">descarga </string>
+    <string name="notifAucuneExcursion"> ninguna excursión encontrada gracias por recargar  </string>
+    <string name="wifitext">El wi-fi está inactivo, ¿quieres activarlo? </string>
+    <string name="wifiOui">Activar Wi-Fi </string>
+    <string name="wifiNon"> No activarlo </string>
+    <string name="notifProblemeTelechargement"> Un problema al descargar, por favor vuelva a intentarlo </string>
+    <string name="url"> https://valpinetapp.projetud.ovh/wp-json/monapi/v2/excursionsAPI </string>
+    <string name="activite">Actividad : </string>
+    <string name="valle">Zona/Valle : </string>
+    <string name="denivele">Desnivel (m) :  </string>
+    <string name="nomFichier">jsonEspagnol</string>
 
     <string name="distance">Distancia</string>
     <string name="duree">Horario</string>
@@ -25,4 +37,7 @@
     <string name="difficulteOrientation">Dificultad de orientación</string>
     <string name="Effort">Esfuerzo necesario</string>
     <string name="boutonCarte">¡Ir!</string>
+    <string name="GPStext">El GPS está inactivo, ¿quiere activarlo? </string>
+    <string name="GPSOui">Activar GPS </string>
+    <string name="GPSNon"> No activarlo </string>
 </resources>
