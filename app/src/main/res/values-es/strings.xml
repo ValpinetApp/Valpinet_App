@@ -14,9 +14,9 @@
     <string name="valleeTabEx">Valle</string>
     <string name="deniveleeTabEx">Desnivel</string>
     <string name="titreEx">Excursiones y ascensiones en Pineta y sus alrededores</string>
-    <string name="pasExcursion">ninguna excursión</string>
+    <string name="pasExcursion">Ninguna excursión</string>
     <string name="telechargement">descarga </string>
-    <string name="notifAucuneExcursion"> ninguna excursión encontrada gracias por recargar  </string>
+    <string name="notifAucuneExcursion"> Ninguna excursión encontrada gracias por recargar  </string>
     <string name="wifitext">El wi-fi está inactivo, ¿quieres activarlo? </string>
     <string name="wifiOui">Activar Wi-Fi </string>
     <string name="wifiNon"> No activarlo </string>

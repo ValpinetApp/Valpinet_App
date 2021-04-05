@@ -8,7 +8,7 @@ android {
 
     defaultConfig {
         applicationId "fr.xyz.valpinetapp"
-        minSdkVersion 24
+        minSdkVersion 28
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"

@@ -61,7 +61,7 @@ public class Carte extends AppCompatActivity {
         map.setTileSource(TileSourceFactory.MAPNIK);
         map.setMultiTouchControls(true);
         mapController = map.getController();
-        mapController.setZoom(14.5);
+        mapController.setZoom(14);
         pointDeDepart = new GeoPoint(42.66620, 0.10373);
         mapController.setCenter(pointDeDepart);
         Marker refuge = new Marker(map);
