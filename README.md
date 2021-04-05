@@ -1,34 +1,3 @@
 # Valpinet_App
-code pour Antoine:
-final LocationManager manager = (LocationManager) getSystemService( Context.LOCATION_SERVICE ); //on recupere l etat du gps pour savoir si il est actif ou non
-        if ( !manager.isProviderEnabled( LocationManager.GPS_PROVIDER ) )
-        {        Button fra = findViewById(R.id.button2);
 
-
-            createGpsDisabledAlert();
-        }
-private void createGpsDisabledAlert() {
-        AlertDialog.Builder localBuilder = new AlertDialog.Builder(this);
-        localBuilder
-                .setMessage("Le GPS est inactif, voulez-vous l'activer ?")
-                .setCancelable(false)
-                .setPositiveButton("Activer GPS ",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface paramDialogInterface, int paramInt) {
-                                MainActivity.this.showGpsOptions();
-                            }
-                        }
-                );
-        localBuilder.setNegativeButton("Ne pas l'activer ",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface paramDialogInterface, int paramInt) {
-                        paramDialogInterface.cancel();
-                    }
-                }
-        );
-        localBuilder.create().show();
-    }
-
-    private void showGpsOptions() {
-        startActivityForResult(new Intent("android.settings.LOCATION_SOURCE_SETTINGS"),-1);
-    }
+La vallée de Pineta, située en Espagne, est un point de départ pour de nombreuses activités et excursions. Le site Valpineta.eu, créé par les gardiens du refuge de Pineta en 2019, a pour ambition de présenter les activités de montagne pouvant être réalisées dans les environs : excursions, escalade, canyon, ski de rando… La connexion en montagne n’étant pas toujours très bonne, notamment au refuge. L’objectif de ce projet est de développer une application mobile permettant la récupération des informations, via le site sur les excursions existantes, pour les rendre accessibles au sein de l’application mobile, même hors connexion. Cette application devra nous permettre de nous situer sur une carte en intégrant un GPS Tracker et l’itinéraire de l’excursion choisie. Ce nouveau projet n’a aucun but commercial et ne sert qu’à visualiser les caractéristiques d’une excursion et de suivre le trajet pendant cette dite excursion, elle permettra à l’utilisateur de se géolocaliser en temps 
